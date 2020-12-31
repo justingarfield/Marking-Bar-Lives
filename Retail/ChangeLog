@@ -1,3 +1,7 @@
+Version 9.0.2
+Updated TOC
+changed ClearWorldMarker command to /cwm 0
+
 Version 9.0.1
 Update API SetBackdrop changes due Shadowlands Pre-Patch
 See: https://www.wowhead.com/news=316954/addons-now-available-for-use-in-shadowlands-beta
