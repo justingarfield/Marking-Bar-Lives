@@ -91,7 +91,7 @@ MBFlaresDB = {
 MBGLOBAL = {}
 
 local defaultBackdrop = {
-	bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+	bgFile = "Interface\\AddOns\\MarkingBarLives\\UI-Tooltip-Background",
 	edgeFile = "Interface\\AddOns\\MarkingBarLives\\resources\\UI-Tooltip-Border",
 	tile = true,
 	tileSize = 16,
@@ -99,7 +99,7 @@ local defaultBackdrop = {
 	insets = {left = 4, right = 4, top = 4, bottom = 4,}
 }
 local borderlessBackdrop = {
-	bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+	bgFile = "Interface\\AddOns\\MarkingBarLives\\UI-Tooltip-Background",
 	tile = true,
 	tileSize = 16
 }
@@ -113,7 +113,7 @@ local editBoxBackdrop = {
 -- MB Main Frame and Movers
 -------------------------------------------------------
 
-MB_mainFrame = CreateFrame("Frame", "MB_mainFrame", UIParent)
+MB_mainFrame = CreateFrame("Frame", "MB_mainFrame", UIParent, BackdropTemplateMixin and "BackdropTemplate")
 MB_mainFrame:SetBackdrop(borderlessBackdrop)
 MB_mainFrame:SetBackdropColor(0,0,0,0)
 MB_mainFrame:EnableMouse(true)
@@ -124,7 +124,7 @@ MB_mainFrame:SetSize(190,35)
 MB_mainFrame:SetPoint("TOP", UIParent, "TOP")
 MB_mainFrame:SetClampedToScreen(false)
 
-local moverLeft = CreateFrame("Frame", "moverLeft", MB_mainFrame)
+local moverLeft = CreateFrame("Frame", "moverLeft", MB_mainFrame, BackdropTemplateMixin and "BackdropTemplate")
 moverLeft:SetBackdrop(defaultBackdrop)
 moverLeft:SetBackdropColor(0.1,0.1,0.1,0.7)
 moverLeft:EnableMouse(true)
@@ -138,7 +138,7 @@ moverLeft:SetScript("OnMouseUp", function(self) MB_mainFrame:StopMovingOrSizing(
 -- MB Icon Frame and Icons
 -------------------------------------------------------
 
-local iconFrame = CreateFrame("Frame", "MB_iconFrame", MB_mainFrame)
+local iconFrame = CreateFrame("Frame", "MB_iconFrame", MB_mainFrame, BackdropTemplateMixin and "BackdropTemplate")
 iconFrame:SetBackdrop(defaultBackdrop)
 iconFrame:SetBackdropColor(0.1,0.1,0.1,0.7)
 iconFrame:EnableMouse(true)
@@ -240,7 +240,7 @@ lockIcon:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
 -- MB Control Frame
 -------------------------------------------------------
 
-local MB_controlFrame = CreateFrame("Frame", "MB_controlFrame", UIParent)
+local MB_controlFrame = CreateFrame("Frame", "MB_controlFrame", UIParent, BackdropTemplateMixin and "BackdropTemplate")
 MB_controlFrame:SetBackdrop(defaultBackdrop)
 MB_controlFrame:SetBackdropColor(0.1,0.1,0.1,0.7)
 MB_controlFrame:EnableMouse(true)
@@ -303,7 +303,7 @@ ctrlLockIcon:SetPoint("LEFT", optIcon , "RIGHT")
 ctrlLockIcon:SetAlpha(1)
 ctrlLockIcon:EnableMouse(true)
 
-local moverRight = CreateFrame("Frame", "moverRight", MB_controlFrame)
+local moverRight = CreateFrame("Frame", "moverRight", MB_controlFrame, BackdropTemplateMixin and "BackdropTemplate")
 moverRight:SetBackdrop(defaultBackdrop)
 moverRight:SetBackdropColor(0.1,0.1,0.1,0.7)
 moverRight:SetSize(20,35)
@@ -319,7 +319,7 @@ moverRight:EnableMouse(true)
 -- MBFlares Main Frame and Movers
 -------------------------------------------------------
 
-MBFlares_mainFrame = CreateFrame("Frame", "MBFlares_mainFrame", UIParent)
+MBFlares_mainFrame = CreateFrame("Frame", "MBFlares_mainFrame", UIParent, BackdropTemplateMixin and "BackdropTemplate")
 MBFlares_mainFrame:SetBackdrop(borderlessBackdrop)
 MBFlares_mainFrame:SetBackdropColor(0,0,0,0)
 MBFlares_mainFrame:EnableMouse(true)
@@ -330,7 +330,7 @@ MBFlares_mainFrame:SetSize(180,35)
 MBFlares_mainFrame:SetPoint("TOP", UIParent, "TOP",0,-40)
 MBFlares_mainFrame:SetClampedToScreen(false)
 
-local MBFlares_moverLeft = CreateFrame("Frame", "MBFlares_moverLeft", MBFlares_mainFrame)
+local MBFlares_moverLeft = CreateFrame("Frame", "MBFlares_moverLeft", MBFlares_mainFrame, BackdropTemplateMixin and "BackdropTemplate")
 MBFlares_moverLeft:SetBackdrop(defaultBackdrop)
 MBFlares_moverLeft:SetBackdropColor(0.1,0.1,0.1,0.7)
 MBFlares_moverLeft:EnableMouse(true)
@@ -343,7 +343,7 @@ MBFlares_moverLeft:SetScript("OnMouseUp", function(self) MBFlares_mainFrame:Stop
 -------------------------------------------------------
 -- The Flare Frame and Flares
 -------------------------------------------------------
-local flareFrame = CreateFrame("Frame", "MB_flareFrame", MBFlares_mainFrame)
+local flareFrame = CreateFrame("Frame", "MB_flareFrame", MBFlares_mainFrame, BackdropTemplateMixin and "BackdropTemplate")
 flareFrame:SetBackdrop(defaultBackdrop)
 flareFrame:SetBackdropColor(0.1,0.1,0.1,0.1,0.7)
 flareFrame:EnableMouse(true)
@@ -1268,7 +1268,7 @@ MBOptionsText:SetText(MB.."|cffe1a500 Options")
 local OptionsText = MarkingBarOpt.panel:CreateFontString("OptionsText", "OVERLAY", "ChatFontSmall")
 OptionsText:SetPoint("TOPLEFT", MarkingBarOpt.panel, "TOPLEFT",25,-30)
 OptionsText:SetText("Expand the MarkingBarLives (+) on the left to see the options.")
-local versFooter = CreateFrame("Frame", "versFooter", MarkingBarOpt.panel)
+local versFooter = CreateFrame("Frame", "versFooter", MarkingBarOpt.panel, BackdropTemplateMixin and "BackdropTemplate")
 versFooter:SetBackdrop(defaultBackdrop)
 versFooter:SetBackdropColor(0.1,0.1,0.1,0.9)
 versFooter:SetBackdropBorderColor(1,1,1,0.5)
