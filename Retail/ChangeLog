@@ -1,6 +1,5 @@
 Version 9.0.2.1
-Version 9.0.2.1
-Corrected issue of Marker Announcements taking focus of Key Presses when not properly loaded.
+Corrected issue of Marker Announcements taking focus of key presses when Marking Bar Lives Options are not loaded properly.
 Thanks to pixoltwo for the input with correction as well
 
 Version 9.0.2
