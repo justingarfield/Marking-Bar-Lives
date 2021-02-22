@@ -3,7 +3,7 @@
 ## Notes: Quickly and easily add raid icons and world flairs, and announce them in chat.
 ## Author: Telryu-Feathermoon US (Previously Vilandra-Blade's Edge US & maintained by Kvee-Magtheridon EU)
 ## Dependencies: 
-## Version: 9.0.2
+## Version: 9.0.2.1
 ## SavedVariablesPerCharacter: MBDB, MBCtrlDB, MBFlaresDB
 ## SavedVariables: MBGLOBAL
 MarkingBarLives.lua
