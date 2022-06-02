@@ -1,0 +1,4 @@
+externals:
+  Libs/WagoAnalytics:
+    url: https://github.com/methodgg/WagoAnalytics.git
+    branch: main
