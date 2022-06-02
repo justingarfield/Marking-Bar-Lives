@@ -6,6 +6,8 @@ local MBF = "|cffe1a500MBL|cff69ccf0Flares|cffffffff"   -- MBFlares Title
 local versionNum = GetAddOnMetadata("MarkingBarLives", "Version")
 local curVer = "|cffffffff "..versionNum.."|cffe1a500"      -- Version Number
 
+local WagoAnalytics = LibStub("WagoAnalytics"):Register("anKWn46E")
+
 DEFAULT_CHAT_FRAME:AddMessage(MB..curVer..' is loaded.')
 DEFAULT_CHAT_FRAME:AddMessage(MB..' Use /mbl to access the options panel.')
 
