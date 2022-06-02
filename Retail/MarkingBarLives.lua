@@ -6,6 +6,8 @@ local MBF = "|cffe1a500MBL|cff69ccf0Flares|cffffffff"   -- MBFlares Title
 local versionNum = GetAddOnMetadata("MarkingBarLives", "Version")
 local curVer = "|cffffffff "..versionNum.."|cffe1a500"      -- Version Number
 
+local WagoAnalytics = LibStub("WagoAnalytics"):Register("anKWn46E")
+
 DEFAULT_CHAT_FRAME:AddMessage(MB..curVer..' is loaded.')
 DEFAULT_CHAT_FRAME:AddMessage(MB..' Use /mbl to access the options panel.')
 
@@ -91,7 +93,7 @@ MBFlaresDB = {
 MBGLOBAL = {}
 
 local defaultBackdrop = {
-	bgFile = "Interface\\AddOns\\MarkingBarLives\\UI-Tooltip-Background",
+	bgFile = "Interface\\AddOns\\MarkingBarLives\\resources\\UI-Tooltip-Background",
 	edgeFile = "Interface\\AddOns\\MarkingBarLives\\resources\\UI-Tooltip-Border",
 	tile = true,
 	tileSize = 16,
@@ -99,7 +101,7 @@ local defaultBackdrop = {
 	insets = {left = 4, right = 4, top = 4, bottom = 4,}
 }
 local borderlessBackdrop = {
-	bgFile = "Interface\\AddOns\\MarkingBarLives\\UI-Tooltip-Background",
+	bgFile = "Interface\\AddOns\\MarkingBarLives\\resources\\UI-Tooltip-Background",
 	tile = true,
 	tileSize = 16
 }
