@@ -288,7 +288,7 @@ optIcon:SetNormalTexture("interface\\AddOns\\MarkingBarLives\\resources\\Gear_64
 optIcon:GetNormalTexture():SetTexCoord(0,.5,0,.5)
 optIcon:EnableMouse(true)
 optIcon:RegisterForClicks("AnyDown")
-optIcon:SetScript("OnClick", function(self,button) if ( button == "RightButton" ) then InterfaceOptionsFrame_OpenToCategory(MarkingBarOpt.AnnounceOptPg) else InterfaceOptionsFrame_OpenToCategory(MarkingBarOpt.childpanel1) end end )
+optIcon:SetScript("OnClick", function(self,button) if ( button == "RightButton" ) then InterfaceOptionsFrame_OpenToCategory(MarkingBarOpt.AnnounceOptPg) else InterfaceOptionsFrame_OpenToCategory(MarkingBarOpt.MarkerOptPg) end end )
 optIcon:SetScript("OnEnter", function(self) if (MBCtrlDB.tooltips==true) then GameTooltip:SetOwner(self, "ANCHOR_CURSOR"); GameTooltip:ClearLines(); GameTooltip:AddLine("Options",0.88,0.65,0); GameTooltip:Show() end end)
 optIcon:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
 
@@ -1281,104 +1281,104 @@ versionText:SetText(MB..curVer)
 ----------------
 -- Marker Options Page
 ----------------
-MarkingBarOpt.childpanel1 = CreateFrame( "Frame", "optionsMarker", MarkingBarOpt.panel);
-MarkingBarOpt.childpanel1.name = "Markers";
-MarkingBarOpt.childpanel1.parent = MarkingBarOpt.panel.name;
-MarkingBarOpt.childpanel1.okay = function(self) MB_Announce_Save(); end
-MarkingBarOpt.childpanel1.cancel = function(self) MB_Announce_Save(); end
-MarkingBarOpt.childpanel1.default = function(self) MB_reset(); MB_checkUpdater(); end
-MarkingBarOpt.childpanel1.refresh = function(self) MB_checkUpdater(); MB_Announce_Save(); end
-InterfaceOptions_AddCategory(MarkingBarOpt.childpanel1);
+MarkingBarOpt.MarkerOptPg = CreateFrame( "Frame", "optionsMarker", MarkingBarOpt.panel);
+MarkingBarOpt.MarkerOptPg.name = "Markers";
+MarkingBarOpt.MarkerOptPg.parent = MarkingBarOpt.panel.name;
+MarkingBarOpt.MarkerOptPg.okay = function(self) MB_Announce_Save(); end
+MarkingBarOpt.MarkerOptPg.cancel = function(self) MB_Announce_Save(); end
+MarkingBarOpt.MarkerOptPg.default = function(self) MB_reset(); MB_checkUpdater(); end
+MarkingBarOpt.MarkerOptPg.refresh = function(self) MB_checkUpdater(); MB_Announce_Save(); end
+InterfaceOptions_AddCategory(MarkingBarOpt.MarkerOptPg);
 
-local markerOptionsText = MarkingBarOpt.childpanel1:CreateFontString("markerOptionsText", "OVERLAY", "ChatFontNormal")
-markerOptionsText:SetPoint("TOP", MarkingBarOpt.childpanel1, "TOP",0,-10)
+local markerOptionsText = MarkingBarOpt.MarkerOptPg:CreateFontString("markerOptionsText", "OVERLAY", "ChatFontNormal")
+markerOptionsText:SetPoint("TOP", MarkingBarOpt.MarkerOptPg, "TOP",0,-10)
 markerOptionsText:SetText(MB.."|cffe1a500 Options")
 
-local showCheck = CreateFrame("CheckButton", "showCheck", MarkingBarOpt.childpanel1, "UICheckButtonTemplate")
-showCheck:SetPoint("TOPLEFT", MarkingBarOpt.childpanel1, "TOPLEFT",25,-30)
+local showCheck = CreateFrame("CheckButton", "showCheck", MarkingBarOpt.MarkerOptPg, "UICheckButtonTemplate")
+showCheck:SetPoint("TOPLEFT", MarkingBarOpt.MarkerOptPg, "TOPLEFT",25,-30)
 showCheck:SetSize(20,20)
 showCheck:SetScript("OnClick", function(self) MBDB.shown = not MBDB.shown; MB_targetChecker("main") end)
-local showText = MarkingBarOpt.childpanel1:CreateFontString("showText", "OVERLAY", "ChatFontSmall")
+local showText = MarkingBarOpt.MarkerOptPg:CreateFontString("showText", "OVERLAY", "ChatFontSmall")
 showText:SetPoint("LEFT", showCheck, "RIGHT", 5,0)
 showText:SetText("Always show "..MB.." with or without a target")
 
-local partyRaidText = MarkingBarOpt.childpanel1:CreateFontString("partyRaidText", "OVERLAY", "ChatFontSmall")
+local partyRaidText = MarkingBarOpt.MarkerOptPg:CreateFontString("partyRaidText", "OVERLAY", "ChatFontSmall")
 partyRaidText:SetPoint("TOPLEFT", showCheck,"BOTTOMLEFT",0,-5)
 partyRaidText:SetText("Show "..MB.." when...")
 
-local aloneCheck = CreateFrame("CheckButton", "aloneCheck", MarkingBarOpt.childpanel1, "UICheckButtonTemplate")
+local aloneCheck = CreateFrame("CheckButton", "aloneCheck", MarkingBarOpt.MarkerOptPg, "UICheckButtonTemplate")
 aloneCheck:SetPoint("TOPLEFT", partyRaidText,"BOTTOMLEFT",0,-2)
 aloneCheck:SetSize(20,20)
 aloneCheck:SetScript("OnClick", function(self) MBDB.aloneShow = not MBDB.aloneShow; MB_targetChecker("main") end)
-local aloneText = MarkingBarOpt.childpanel1:CreateFontString("aloneText", "OVERLAY", "ChatFontSmall")
+local aloneText = MarkingBarOpt.MarkerOptPg:CreateFontString("aloneText", "OVERLAY", "ChatFontSmall")
 aloneText:SetPoint("LEFT", aloneCheck, "RIGHT", 5,0)
 aloneText:SetText(" Alone")
 
-local partyCheck = CreateFrame("CheckButton", "partyCheck", MarkingBarOpt.childpanel1, "UICheckButtonTemplate")
+local partyCheck = CreateFrame("CheckButton", "partyCheck", MarkingBarOpt.MarkerOptPg, "UICheckButtonTemplate")
 partyCheck:SetPoint("LEFT", aloneText, "RIGHT",20,0)
 partyCheck:SetSize(20,20)
 partyCheck:SetScript("OnClick", function(self) MBDB.partyShow = not MBDB.partyShow; MB_targetChecker("main") end)
-local partyText = MarkingBarOpt.childpanel1:CreateFontString("partyText", "OVERLAY", "ChatFontSmall")
+local partyText = MarkingBarOpt.MarkerOptPg:CreateFontString("partyText", "OVERLAY", "ChatFontSmall")
 partyText:SetPoint("LEFT", partyCheck, "RIGHT", 5,0)
 partyText:SetText(" in a Party ")
 
-local raidCheck = CreateFrame("CheckButton", "raidCheck", MarkingBarOpt.childpanel1, "UICheckButtonTemplate")
+local raidCheck = CreateFrame("CheckButton", "raidCheck", MarkingBarOpt.MarkerOptPg, "UICheckButtonTemplate")
 raidCheck:SetPoint("LEFT", partyText, "RIGHT",20,0)
 raidCheck:SetSize(20,20)
 raidCheck:SetScript("OnClick", function(self) MBDB.raidShow = not MBDB.raidShow; MB_targetChecker("main") end)
-local raidText = MarkingBarOpt.childpanel1:CreateFontString("raidText", "OVERLAY", "ChatFontSmall")
+local raidText = MarkingBarOpt.MarkerOptPg:CreateFontString("raidText", "OVERLAY", "ChatFontSmall")
 raidText:SetPoint("LEFT", raidCheck, "RIGHT", 5,0)
 raidText:SetText(" in a Raid ")
 
-local lockCheck = CreateFrame("CheckButton", "lockCheck", MarkingBarOpt.childpanel1, "UICheckButtonTemplate")
+local lockCheck = CreateFrame("CheckButton", "lockCheck", MarkingBarOpt.MarkerOptPg, "UICheckButtonTemplate")
 lockCheck:SetPoint("TOP",aloneCheck,"BOTTOM",0,-5)
 lockCheck:SetSize(20,20)
 lockCheck:SetScript("OnClick", function(self) MB_lockToggle("main") MB_checkUpdater() end)
-local lockText = MarkingBarOpt.childpanel1:CreateFontString("lockText", "OVERLAY", "ChatFontSmall")
+local lockText = MarkingBarOpt.MarkerOptPg:CreateFontString("lockText", "OVERLAY", "ChatFontSmall")
 lockText:SetPoint("LEFT", lockCheck, "RIGHT", 5,0)
 lockText:SetText("Lock "..MB.."'s position")
 
-local clampCheck = CreateFrame("CheckButton", "clampCheck", MarkingBarOpt.childpanel1, "UICheckButtonTemplate")
+local clampCheck = CreateFrame("CheckButton", "clampCheck", MarkingBarOpt.MarkerOptPg, "UICheckButtonTemplate")
 clampCheck:SetPoint("TOP",lockCheck,"BOTTOM",0,-5)
 clampCheck:SetSize(20,20)
 clampCheck:SetScript("OnClick", function(self) MBDB.clamped = not MBDB.clamped; MB_mainFrame:SetClampedToScreen(MBDB.clamped) end)
-local clampText = MarkingBarOpt.childpanel1:CreateFontString("clampText", "OVERLAY", "ChatFontSmall")
+local clampText = MarkingBarOpt.MarkerOptPg:CreateFontString("clampText", "OVERLAY", "ChatFontSmall")
 clampText:SetPoint("LEFT", clampCheck, "RIGHT", 5,0)
 clampText:SetText("Keep "..MB.." inside screen edges")
 
-local flipCheck = CreateFrame("CheckButton", "flipCheck", MarkingBarOpt.childpanel1, "UICheckButtonTemplate")
+local flipCheck = CreateFrame("CheckButton", "flipCheck", MarkingBarOpt.MarkerOptPg, "UICheckButtonTemplate")
 flipCheck:SetPoint("TOP",clampCheck,"BOTTOM",0,-5)
 flipCheck:SetSize(20,20)
 flipCheck:SetScript("OnClick", function(self) MBDB.flipped = not MBDB.flipped; MB_flipChecker() end)
-local flipText = MarkingBarOpt.childpanel1:CreateFontString("flipText", "OVERLAY", "ChatFontSmall")
+local flipText = MarkingBarOpt.MarkerOptPg:CreateFontString("flipText", "OVERLAY", "ChatFontSmall")
 flipText:SetPoint("LEFT", flipCheck, "RIGHT", 5,0)
 flipText:SetText("Reverse "..MB.."'s icon order")
 
-local vertCheck = CreateFrame("CheckButton", "vertCheck", MarkingBarOpt.childpanel1, "UICheckButtonTemplate")
+local vertCheck = CreateFrame("CheckButton", "vertCheck", MarkingBarOpt.MarkerOptPg, "UICheckButtonTemplate")
 vertCheck:SetPoint("TOP",flipCheck,"BOTTOM",0,-5)
 vertCheck:SetSize(20,20)
 vertCheck:SetScript("OnClick", function(self) MBDB.vertical = not MBDB.vertical; MB_flipChecker() end)
-local vertText = MarkingBarOpt.childpanel1:CreateFontString("vertText", "OVERLAY", "ChatFontSmall")
+local vertText = MarkingBarOpt.MarkerOptPg:CreateFontString("vertText", "OVERLAY", "ChatFontSmall")
 vertText:SetPoint("LEFT", vertCheck, "RIGHT", 5,0)
 vertText:SetText("Display "..MB.." vertically")
 
-local bgCheck = CreateFrame("CheckButton", "bgCheck", MarkingBarOpt.childpanel1, "UICheckButtonTemplate")
+local bgCheck = CreateFrame("CheckButton", "bgCheck", MarkingBarOpt.MarkerOptPg, "UICheckButtonTemplate")
 bgCheck:SetPoint("TOP",vertCheck,"BOTTOM",0,-5)
 bgCheck:SetSize(20,20)
 bgCheck:SetScript("OnClick", function(self) MB_bgToggle("main") end)
-local bgText = MarkingBarOpt.childpanel1:CreateFontString("bgText", "OVERLAY", "ChatFontSmall")
+local bgText = MarkingBarOpt.MarkerOptPg:CreateFontString("bgText", "OVERLAY", "ChatFontSmall")
 bgText:SetPoint("LEFT", bgCheck, "RIGHT", 5,0)
 bgText:SetText("Hide "..MB.."'s background and border")
 
-local toolCheck = CreateFrame("CheckButton", "toolCheck", MarkingBarOpt.childpanel1, "UICheckButtonTemplate")
+local toolCheck = CreateFrame("CheckButton", "toolCheck", MarkingBarOpt.MarkerOptPg, "UICheckButtonTemplate")
 toolCheck:SetPoint("TOP",bgCheck,"BOTTOM",0,-5)
 toolCheck:SetSize(20,20)
 toolCheck:SetScript("OnClick", function(self) MBDB.tooltips = not MBDB.tooltips end)
-local toolText = MarkingBarOpt.childpanel1:CreateFontString("toolText", "OVERLAY", "ChatFontSmall")
+local toolText = MarkingBarOpt.MarkerOptPg:CreateFontString("toolText", "OVERLAY", "ChatFontSmall")
 toolText:SetPoint("LEFT", toolCheck, "RIGHT", 5,0)
 toolText:SetText("Enable "..MB.."'s tooltips")
 
-local alphaSlider = CreateFrame("Slider", "alphaSlider", MarkingBarOpt.childpanel1, "OptionsSliderTemplate")
+local alphaSlider = CreateFrame("Slider", "alphaSlider", MarkingBarOpt.MarkerOptPg, "OptionsSliderTemplate")
 alphaSlider:SetPoint("TOPLEFT", toolCheck, "BOTTOMLEFT",25,-25)
 alphaSlider:SetSize(180,16)
 alphaSlider:SetMinMaxValues(0,1)
@@ -1388,7 +1388,7 @@ alphaSlider:SetOrientation("HORIZONTAL")
 alphaSlider:SetScript("OnValueChanged", function(self) MB_alpha(self,"main") end)
 alphaSlider:SetScript("OnLoad", function(self) MB_alpha(self,"main") end)
 
-local scaleSlider = CreateFrame("Slider", "scaleSlider", MarkingBarOpt.childpanel1, "OptionsSliderTemplate")
+local scaleSlider = CreateFrame("Slider", "scaleSlider", MarkingBarOpt.MarkerOptPg, "OptionsSliderTemplate")
 scaleSlider:SetPoint("TOPLEFT", alphaSlider, "BOTTOMLEFT",0,-25)
 scaleSlider:SetSize(180,16)
 scaleSlider:SetMinMaxValues(0.5,1.5)
@@ -1402,108 +1402,108 @@ scaleSlider:SetScript("OnLoad", function(self) MB_scale(self,"main") end)
 ----------------
 -- Control Options Page
 ----------------
-MarkingBarOpt.childpanel2 = CreateFrame( "Frame", "optionsControl", MarkingBarOpt.panel);
-MarkingBarOpt.childpanel2.name = "Controls";
-MarkingBarOpt.childpanel2.parent = MarkingBarOpt.panel.name;
-MarkingBarOpt.childpanel2.okay = function(self) MB_Announce_Save(); end
-MarkingBarOpt.childpanel2.cancel = function(self) MB_Announce_Save(); end
-MarkingBarOpt.childpanel2.default = function(self) MB_reset(); MB_checkUpdater(); end
-MarkingBarOpt.childpanel2.refresh = function(self) MB_checkUpdater(); MB_Announce_Save(); end
-InterfaceOptions_AddCategory(MarkingBarOpt.childpanel2);
+MarkingBarOpt.ControlOptPg = CreateFrame( "Frame", "optionsControl", MarkingBarOpt.panel);
+MarkingBarOpt.ControlOptPg.name = "Controls";
+MarkingBarOpt.ControlOptPg.parent = MarkingBarOpt.panel.name;
+MarkingBarOpt.ControlOptPg.okay = function(self) MB_Announce_Save(); end
+MarkingBarOpt.ControlOptPg.cancel = function(self) MB_Announce_Save(); end
+MarkingBarOpt.ControlOptPg.default = function(self) MB_reset(); MB_checkUpdater(); end
+MarkingBarOpt.ControlOptPg.refresh = function(self) MB_checkUpdater(); MB_Announce_Save(); end
+InterfaceOptions_AddCategory(MarkingBarOpt.ControlOptPg);
 
-local ctrlOptionsText = MarkingBarOpt.childpanel2:CreateFontString("ctrlOptionsText", "OVERLAY", "ChatFontNormal")
-ctrlOptionsText:SetPoint("TOP", MarkingBarOpt.childpanel2, "TOP",0,-10)
+local ctrlOptionsText = MarkingBarOpt.ControlOptPg:CreateFontString("ctrlOptionsText", "OVERLAY", "ChatFontNormal")
+ctrlOptionsText:SetPoint("TOP", MarkingBarOpt.ControlOptPg, "TOP",0,-10)
 ctrlOptionsText:SetText(MB.."|cffe1a500 Control Options")
 
-local ctrlShowCheck = CreateFrame("CheckButton", "ctrlShowCheck", MarkingBarOpt.childpanel2, "UICheckButtonTemplate")
-ctrlShowCheck:SetPoint("TOPLEFT", MarkingBarOpt.childpanel2, "TOPLEFT",25,-30)
+local ctrlShowCheck = CreateFrame("CheckButton", "ctrlShowCheck", MarkingBarOpt.ControlOptPg, "UICheckButtonTemplate")
+ctrlShowCheck:SetPoint("TOPLEFT", MarkingBarOpt.ControlOptPg, "TOPLEFT",25,-30)
 ctrlShowCheck:SetSize(20,20)
 ctrlShowCheck:SetScript("OnClick", function(self) MBCtrlDB.shown = not MBCtrlDB.shown; MB_targetChecker("ctrl") end)
-MarkingBarOpt.childpanel2:CreateFontString("ctrlShowText", "OVERLAY", "ChatFontSmall")
+MarkingBarOpt.ControlOptPg:CreateFontString("ctrlShowText", "OVERLAY", "ChatFontSmall")
 ctrlShowText:SetPoint("LEFT", ctrlShowCheck, "RIGHT", 5,0)
 ctrlShowText:SetText("Always show "..MB.." controls  with or without a target")
 
-local ctrlPartyRaidText = MarkingBarOpt.childpanel2:CreateFontString("ctrlPartyRaidText", "OVERLAY", "ChatFontSmall")
+local ctrlPartyRaidText = MarkingBarOpt.ControlOptPg:CreateFontString("ctrlPartyRaidText", "OVERLAY", "ChatFontSmall")
 ctrlPartyRaidText:SetPoint("TOPLEFT", ctrlShowCheck,"BOTTOMLEFT",0,-5)
 ctrlPartyRaidText:SetText("Show "..MB.." controls  when...")
 
-local ctrlAloneCheck = CreateFrame("CheckButton", "ctrlAloneCheck", MarkingBarOpt.childpanel2, "UICheckButtonTemplate")
+local ctrlAloneCheck = CreateFrame("CheckButton", "ctrlAloneCheck", MarkingBarOpt.ControlOptPg, "UICheckButtonTemplate")
 ctrlAloneCheck:SetPoint("TOPLEFT", ctrlPartyRaidText,"BOTTOMLEFT",0,-2)
 ctrlAloneCheck:SetSize(20,20)
 ctrlAloneCheck:SetScript("OnClick", function(self) MBCtrlDB.aloneShow = not MBCtrlDB.aloneShow; MB_targetChecker("ctrl") end)
-local ctrlAloneText = MarkingBarOpt.childpanel2:CreateFontString("ctrlAloneText", "OVERLAY", "ChatFontSmall")
+local ctrlAloneText = MarkingBarOpt.ControlOptPg:CreateFontString("ctrlAloneText", "OVERLAY", "ChatFontSmall")
 ctrlAloneText:SetPoint("LEFT", ctrlAloneCheck, "RIGHT", 5,0)
 ctrlAloneText:SetText(" Alone")
 
-local ctrlPartyCheck = CreateFrame("CheckButton", "ctrlPartyCheck", MarkingBarOpt.childpanel2, "UICheckButtonTemplate")
+local ctrlPartyCheck = CreateFrame("CheckButton", "ctrlPartyCheck", MarkingBarOpt.ControlOptPg, "UICheckButtonTemplate")
 ctrlPartyCheck:SetPoint("LEFT", ctrlAloneText, "RIGHT",20,0)
 ctrlPartyCheck:SetSize(20,20)
 ctrlPartyCheck:SetScript("OnClick", function(self) MBCtrlDB.partyShow = not MBCtrlDB.partyShow; MB_targetChecker("ctrl") end)
-local ctrlPartyText = MarkingBarOpt.childpanel2:CreateFontString("ctrlPartyText", "OVERLAY", "ChatFontSmall")
+local ctrlPartyText = MarkingBarOpt.ControlOptPg:CreateFontString("ctrlPartyText", "OVERLAY", "ChatFontSmall")
 ctrlPartyText:SetPoint("LEFT", ctrlPartyCheck, "RIGHT", 5,0)
 ctrlPartyText:SetText(" in a Party ")
 
-local ctrlRaidCheck = CreateFrame("CheckButton", "ctrlRaidCheck", MarkingBarOpt.childpanel2, "UICheckButtonTemplate")
+local ctrlRaidCheck = CreateFrame("CheckButton", "ctrlRaidCheck", MarkingBarOpt.ControlOptPg, "UICheckButtonTemplate")
 ctrlRaidCheck:SetPoint("LEFT", ctrlPartyText, "RIGHT",20,0)
 ctrlRaidCheck:SetSize(20,20)
 ctrlRaidCheck:SetScript("OnClick", function(self) MBCtrlDB.raidShow = not MBCtrlDB.raidShow; MB_targetChecker("ctrl") end)
-local ctrlRaidText = MarkingBarOpt.childpanel2:CreateFontString("ctrlRaidText", "OVERLAY", "ChatFontSmall")
+local ctrlRaidText = MarkingBarOpt.ControlOptPg:CreateFontString("ctrlRaidText", "OVERLAY", "ChatFontSmall")
 ctrlRaidText:SetPoint("LEFT", ctrlRaidCheck, "RIGHT", 5,0)
 ctrlRaidText:SetText(" in a Raid ")
 
-local ctrlCheck = CreateFrame("CheckButton", "ctrlCheck", MarkingBarOpt.childpanel2, "UICheckButtonTemplate")
+local ctrlCheck = CreateFrame("CheckButton", "ctrlCheck", MarkingBarOpt.ControlOptPg, "UICheckButtonTemplate")
 ctrlCheck:SetPoint("TOP",ctrlAloneCheck,"BOTTOM",0,-5)
 ctrlCheck:SetSize(20,20)
 ctrlCheck:SetScript("OnClick", function(self) MB_ctrlLockToggle(); MB_checkUpdater(); end)
-local ctrlText = MarkingBarOpt.childpanel2:CreateFontString("ctrlText", "OVERLAY", "ChatFontSmall")
+local ctrlText = MarkingBarOpt.ControlOptPg:CreateFontString("ctrlText", "OVERLAY", "ChatFontSmall")
 ctrlText:SetPoint("LEFT", ctrlCheck, "RIGHT", 5,0)
 ctrlText:SetText("Connect "..MB.."'s controls to the raid icons.")
 
-local ctrlLockCheck = CreateFrame("CheckButton", "ctrlLockCheck", MarkingBarOpt.childpanel2, "UICheckButtonTemplate")
+local ctrlLockCheck = CreateFrame("CheckButton", "ctrlLockCheck", MarkingBarOpt.ControlOptPg, "UICheckButtonTemplate")
 ctrlLockCheck:SetPoint("TOP",ctrlCheck, "BOTTOM",0,-5)
 ctrlLockCheck:SetSize(20,20)
 ctrlLockCheck:SetScript("OnClick", function(self) MB_lockToggle("ctrl"); MB_checkUpdater(); end)
 ctrlLockCheck:SetScript("OnEnter", function(self) GameTooltip:SetOwner(self, "ANCHOR_CURSOR"); GameTooltip:ClearLines(); GameTooltip:AddLine("Note: Changing this options will disconnect controls from the raid icons.",0.88,0.65,0); GameTooltip:Show() end)
 ctrlLockCheck:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
-local ctrlLockText = MarkingBarOpt.childpanel2:CreateFontString("ctrlLockText", "OVERLAY", "ChatFontSmall")
+local ctrlLockText = MarkingBarOpt.ControlOptPg:CreateFontString("ctrlLockText", "OVERLAY", "ChatFontSmall")
 ctrlLockText:SetPoint("LEFT", ctrlLockCheck, "RIGHT", 5,0)
 ctrlLockText:SetText("Lock "..MB.." control's position.")
 
-local ctrlClampCheck = CreateFrame("CheckButton", "ctrlClampCheck", MarkingBarOpt.childpanel2, "UICheckButtonTemplate")
+local ctrlClampCheck = CreateFrame("CheckButton", "ctrlClampCheck", MarkingBarOpt.ControlOptPg, "UICheckButtonTemplate")
 ctrlClampCheck:SetPoint("TOP",ctrlLockCheck,"BOTTOM",0,-5)
 ctrlClampCheck:SetSize(20,20)
 ctrlClampCheck:SetScript("OnClick", function(self) MBCtrlDB.clamped = not MBCtrlDB.clamped; MB_controlFrame:SetClampedToScreen(MBCtrlDB.clamped) end)
-local ctrlClampText = MarkingBarOpt.childpanel2:CreateFontString("ctrlClampText", "OVERLAY", "ChatFontSmall")
+local ctrlClampText = MarkingBarOpt.ControlOptPg:CreateFontString("ctrlClampText", "OVERLAY", "ChatFontSmall")
 ctrlClampText:SetPoint("LEFT", ctrlClampCheck, "RIGHT", 5,0)
 ctrlClampText:SetText("Keep "..MB.." controls  inside screen edges")
 
-local ctrlVertCheck = CreateFrame("CheckButton", "ctrlVertCheck", MarkingBarOpt.childpanel2, "UICheckButtonTemplate")
+local ctrlVertCheck = CreateFrame("CheckButton", "ctrlVertCheck", MarkingBarOpt.ControlOptPg, "UICheckButtonTemplate")
 ctrlVertCheck:SetPoint("TOP",ctrlClampCheck,"BOTTOM",0,-5)
 ctrlVertCheck:SetSize(20,20)
 ctrlVertCheck:SetScript("OnClick", function(self) MBCtrlDB.vertical = not MBCtrlDB.vertical; if MBDB.ctrlLock then MB_ctrlUnlock() end; MB_flipChecker(); MB_checkUpdater() end)
 ctrlVertCheck:SetScript("OnEnter", function(self) GameTooltip:SetOwner(self, "ANCHOR_CURSOR"); GameTooltip:ClearLines(); GameTooltip:AddLine("Note: Changing this options will disconnect controls from the raid icons.",0.88,0.65,0); GameTooltip:Show() end)
 ctrlVertCheck:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
-local ctrlVertText = MarkingBarOpt.childpanel2:CreateFontString("ctrlvertText", "OVERLAY", "ChatFontSmall")
+local ctrlVertText = MarkingBarOpt.ControlOptPg:CreateFontString("ctrlvertText", "OVERLAY", "ChatFontSmall")
 ctrlVertText:SetPoint("LEFT", ctrlVertCheck, "RIGHT", 5,0)
 ctrlVertText:SetText("Display "..MB.." controls  vertically")
 
-local ctrlBgCheck = CreateFrame("CheckButton", "ctrlBgCheck", MarkingBarOpt.childpanel2, "UICheckButtonTemplate")
+local ctrlBgCheck = CreateFrame("CheckButton", "ctrlBgCheck", MarkingBarOpt.ControlOptPg, "UICheckButtonTemplate")
 ctrlBgCheck:SetPoint("TOP",ctrlVertCheck,"BOTTOM",0,-5)
 ctrlBgCheck:SetSize(20,20)
 ctrlBgCheck:SetScript("OnClick", function(self) MB_bgToggle("ctrl") end)
-local ctrlBgText = MarkingBarOpt.childpanel2:CreateFontString("ctrlBgText", "OVERLAY", "ChatFontSmall")
+local ctrlBgText = MarkingBarOpt.ControlOptPg:CreateFontString("ctrlBgText", "OVERLAY", "ChatFontSmall")
 ctrlBgText:SetPoint("LEFT", ctrlBgCheck, "RIGHT", 5,0)
 ctrlBgText:SetText("Hide "..MB.." controls 's background and borders")
 
-local ctrlToolCheck = CreateFrame("CheckButton", "ctrlToolCheck", MarkingBarOpt.childpanel2, "UICheckButtonTemplate")
+local ctrlToolCheck = CreateFrame("CheckButton", "ctrlToolCheck", MarkingBarOpt.ControlOptPg, "UICheckButtonTemplate")
 ctrlToolCheck:SetPoint("TOP",ctrlBgCheck,"BOTTOM",0,-5)
 ctrlToolCheck:SetSize(20,20)
 ctrlToolCheck:SetScript("OnClick", function(self) MBCtrlDB.tooltips = not MBCtrlDB.tooltips; end)
-local ctrlToolText = MarkingBarOpt.childpanel2:CreateFontString("ctrlToolText", "OVERLAY", "ChatFontSmall")
+local ctrlToolText = MarkingBarOpt.ControlOptPg:CreateFontString("ctrlToolText", "OVERLAY", "ChatFontSmall")
 ctrlToolText:SetPoint("LEFT", ctrlToolCheck, "RIGHT", 5,0)
 ctrlToolText:SetText("Enable "..MB.." controls 's tooltips")
 
-local ctrlAlphaSlider = CreateFrame("Slider", "ctrlAlphaSlider", MarkingBarOpt.childpanel2, "OptionsSliderTemplate")
+local ctrlAlphaSlider = CreateFrame("Slider", "ctrlAlphaSlider", MarkingBarOpt.ControlOptPg, "OptionsSliderTemplate")
 ctrlAlphaSlider:SetPoint("TOPLEFT", ctrlToolCheck, "BOTTOMLEFT",25,-25)
 ctrlAlphaSlider:SetSize(180,16)
 ctrlAlphaSlider:SetMinMaxValues(0,1)
@@ -1513,7 +1513,7 @@ ctrlAlphaSlider:SetOrientation("HORIZONTAL")
 ctrlAlphaSlider:SetScript("OnValueChanged", function(self) MB_alpha(self,"ctrl") end)
 ctrlAlphaSlider:SetScript("OnLoad", function(self) MB_alpha(self,"ctrl") end)
 
-local ctrlScaleSlider = CreateFrame("Slider", "ctrlScaleSlider", MarkingBarOpt.childpanel2, "OptionsSliderTemplate")
+local ctrlScaleSlider = CreateFrame("Slider", "ctrlScaleSlider", MarkingBarOpt.ControlOptPg, "OptionsSliderTemplate")
 ctrlScaleSlider:SetPoint("TOPLEFT", ctrlAlphaSlider, "BOTTOMLEFT",0,-25)
 ctrlScaleSlider:SetSize(180,16)
 ctrlScaleSlider:SetMinMaxValues(0.5,1.5)
@@ -1527,104 +1527,104 @@ ctrlScaleSlider:SetScript("OnLoad", function(self) MB_scale (self,"ctrl") end)
 ----------------
 -- Flares Options Page
 ----------------
-MarkingBarOpt.childpanel3 = CreateFrame( "Frame", "optionsFlares", MarkingBarOpt.panel);
-MarkingBarOpt.childpanel3.name = "Flares";
-MarkingBarOpt.childpanel3.parent = MarkingBarOpt.panel.name;
-MarkingBarOpt.childpanel3.okay = function(self) MB_Announce_Save(); end
-MarkingBarOpt.childpanel3.cancel = function(self) MB_Announce_Save(); end
-MarkingBarOpt.childpanel3.default = function(self) MB_reset(); MB_checkUpdater(); end
-MarkingBarOpt.childpanel3.refresh = function(self) MB_checkUpdater(); MB_Announce_Save(); end
-InterfaceOptions_AddCategory(MarkingBarOpt.childpanel3);
+MarkingBarOpt.FlaresOptPg = CreateFrame( "Frame", "optionsFlares", MarkingBarOpt.panel);
+MarkingBarOpt.FlaresOptPg.name = "Flares";
+MarkingBarOpt.FlaresOptPg.parent = MarkingBarOpt.panel.name;
+MarkingBarOpt.FlaresOptPg.okay = function(self) MB_Announce_Save(); end
+MarkingBarOpt.FlaresOptPg.cancel = function(self) MB_Announce_Save(); end
+MarkingBarOpt.FlaresOptPg.default = function(self) MB_reset(); MB_checkUpdater(); end
+MarkingBarOpt.FlaresOptPg.refresh = function(self) MB_checkUpdater(); MB_Announce_Save(); end
+InterfaceOptions_AddCategory(MarkingBarOpt.FlaresOptPg);
 
-local flareOptionsText = MarkingBarOpt.childpanel3:CreateFontString("flareOptionsText", "OVERLAY", "ChatFontNormal")
-flareOptionsText:SetPoint("TOP", MarkingBarOpt.childpanel3, "TOP",0,-10)
+local flareOptionsText = MarkingBarOpt.FlaresOptPg:CreateFontString("flareOptionsText", "OVERLAY", "ChatFontNormal")
+flareOptionsText:SetPoint("TOP", MarkingBarOpt.FlaresOptPg, "TOP",0,-10)
 flareOptionsText:SetText(MBF.."|cffe1a500 Options")
 
-local flareShowCheck = CreateFrame("CheckButton", "flareShowCheck", MarkingBarOpt.childpanel3, "UICheckButtonTemplate")
-flareShowCheck:SetPoint("TOPLEFT", MarkingBarOpt.childpanel3, "TOPLEFT",25,-30)
+local flareShowCheck = CreateFrame("CheckButton", "flareShowCheck", MarkingBarOpt.FlaresOptPg, "UICheckButtonTemplate")
+flareShowCheck:SetPoint("TOPLEFT", MarkingBarOpt.FlaresOptPg, "TOPLEFT",25,-30)
 flareShowCheck:SetSize(20,20)
 flareShowCheck:SetScript("OnClick", function(self) MBFlaresDB.shown = not MBFlaresDB.shown; MB_targetChecker("flare") end)
-MarkingBarOpt.childpanel3:CreateFontString("flareShowText", "OVERLAY", "ChatFontSmall")
+MarkingBarOpt.FlaresOptPg:CreateFontString("flareShowText", "OVERLAY", "ChatFontSmall")
 flareShowText:SetPoint("LEFT", flareShowCheck, "RIGHT", 5,0)
 flareShowText:SetText("Always show "..MBF.." with or without a target")
 
-local flarePartyRaidText = MarkingBarOpt.childpanel3:CreateFontString("flarePartyRaidText", "OVERLAY", "ChatFontSmall")
+local flarePartyRaidText = MarkingBarOpt.FlaresOptPg:CreateFontString("flarePartyRaidText", "OVERLAY", "ChatFontSmall")
 flarePartyRaidText:SetPoint("TOPLEFT", flareShowCheck,"BOTTOMLEFT",0,-5)
 flarePartyRaidText:SetText("Show "..MBF.." when...")
 
-local flareAloneCheck = CreateFrame("CheckButton", "flareAloneCheck", MarkingBarOpt.childpanel3, "UICheckButtonTemplate")
+local flareAloneCheck = CreateFrame("CheckButton", "flareAloneCheck", MarkingBarOpt.FlaresOptPg, "UICheckButtonTemplate")
 flareAloneCheck:SetPoint("TOPLEFT", flarePartyRaidText,"BOTTOMLEFT",0,-2)
 flareAloneCheck:SetSize(20,20)
 flareAloneCheck:SetScript("OnClick", function(self) MBFlaresDB.aloneShow = not MBFlaresDB.aloneShow; MB_targetChecker("flare") end)
-local flareAloneText = MarkingBarOpt.childpanel3:CreateFontString("flareAloneText", "OVERLAY", "ChatFontSmall")
+local flareAloneText = MarkingBarOpt.FlaresOptPg:CreateFontString("flareAloneText", "OVERLAY", "ChatFontSmall")
 flareAloneText:SetPoint("LEFT", flareAloneCheck, "RIGHT", 5,0)
 flareAloneText:SetText(" Alone")
 
-local flarePartyCheck = CreateFrame("CheckButton", "flarePartyCheck", MarkingBarOpt.childpanel3, "UICheckButtonTemplate")
+local flarePartyCheck = CreateFrame("CheckButton", "flarePartyCheck", MarkingBarOpt.FlaresOptPg, "UICheckButtonTemplate")
 flarePartyCheck:SetPoint("LEFT", flareAloneText, "RIGHT",20,0)
 flarePartyCheck:SetSize(20,20)
 flarePartyCheck:SetScript("OnClick", function(self) MBFlaresDB.partyShow = not MBFlaresDB.partyShow; MB_targetChecker("flare") end)
-local flarePartyText = MarkingBarOpt.childpanel3:CreateFontString("flarePartyText", "OVERLAY", "ChatFontSmall")
+local flarePartyText = MarkingBarOpt.FlaresOptPg:CreateFontString("flarePartyText", "OVERLAY", "ChatFontSmall")
 flarePartyText:SetPoint("LEFT", flarePartyCheck, "RIGHT", 5,0)
 flarePartyText:SetText(" in a Party ")
 
-local flareRaidCheck = CreateFrame("CheckButton", "flareRaidCheck", MarkingBarOpt.childpanel3, "UICheckButtonTemplate")
+local flareRaidCheck = CreateFrame("CheckButton", "flareRaidCheck", MarkingBarOpt.FlaresOptPg, "UICheckButtonTemplate")
 flareRaidCheck:SetPoint("LEFT", flarePartyText, "RIGHT",20,0)
 flareRaidCheck:SetSize(20,20)
 flareRaidCheck:SetScript("OnClick", function(self) MBFlaresDB.raidShow = not MBFlaresDB.raidShow; MB_targetChecker("flare") end)
-local flareRaidText = MarkingBarOpt.childpanel3:CreateFontString("flareRaidText", "OVERLAY", "ChatFontSmall")
+local flareRaidText = MarkingBarOpt.FlaresOptPg:CreateFontString("flareRaidText", "OVERLAY", "ChatFontSmall")
 flareRaidText:SetPoint("LEFT", flareRaidCheck, "RIGHT", 5,0)
 flareRaidText:SetText(" in a Raid ")
 
-local flareLockCheck = CreateFrame("CheckButton", "flareLockCheck", MarkingBarOpt.childpanel3, "UICheckButtonTemplate")
+local flareLockCheck = CreateFrame("CheckButton", "flareLockCheck", MarkingBarOpt.FlaresOptPg, "UICheckButtonTemplate")
 flareLockCheck:SetPoint("TOP",flareAloneCheck, "BOTTOM",0,-5)
 flareLockCheck:SetSize(20,20)
 flareLockCheck:SetScript("OnClick", function(self) MB_lockToggle("flare") end)
-local flareLockText = MarkingBarOpt.childpanel3:CreateFontString("flareLockText", "OVERLAY", "ChatFontSmall")
+local flareLockText = MarkingBarOpt.FlaresOptPg:CreateFontString("flareLockText", "OVERLAY", "ChatFontSmall")
 flareLockText:SetPoint("LEFT", flareLockCheck, "RIGHT", 5,0)
 flareLockText:SetText("Lock "..MBF.."'s position")
 
-local flareClampCheck = CreateFrame("CheckButton", "flareClampCheck", MarkingBarOpt.childpanel3, "UICheckButtonTemplate")
+local flareClampCheck = CreateFrame("CheckButton", "flareClampCheck", MarkingBarOpt.FlaresOptPg, "UICheckButtonTemplate")
 flareClampCheck:SetPoint("TOP",flareLockCheck,"BOTTOM",0,-5)
 flareClampCheck:SetSize(20,20)
 flareClampCheck:SetScript("OnClick", function(self) MBFlaresDB.clamped = not MBFlaresDB.clamped; MBFlares_mainFrame:SetClampedToScreen(MBFlaresDB.clamped) end)
-local flareClampText = MarkingBarOpt.childpanel3:CreateFontString("flareClampText", "OVERLAY", "ChatFontSmall")
+local flareClampText = MarkingBarOpt.FlaresOptPg:CreateFontString("flareClampText", "OVERLAY", "ChatFontSmall")
 flareClampText:SetPoint("LEFT", flareClampCheck, "RIGHT", 5,0)
 flareClampText:SetText("Keep "..MBF.." inside screen edges")
 
-local flareFlipCheck = CreateFrame("CheckButton", "flareflipCheck", MarkingBarOpt.childpanel3, "UICheckButtonTemplate")
+local flareFlipCheck = CreateFrame("CheckButton", "flareflipCheck", MarkingBarOpt.FlaresOptPg, "UICheckButtonTemplate")
 flareFlipCheck:SetPoint("TOP",flareClampCheck,"BOTTOM",0,-5)
 flareFlipCheck:SetSize(20,20)
 flareFlipCheck:SetScript("OnClick", function(self) MBFlaresDB.flipped = not MBFlaresDB.flipped; MB_flareflipChecker() end)
-local flareFlipText = MarkingBarOpt.childpanel3:CreateFontString("flareflipText", "OVERLAY", "ChatFontSmall")
+local flareFlipText = MarkingBarOpt.FlaresOptPg:CreateFontString("flareflipText", "OVERLAY", "ChatFontSmall")
 flareFlipText:SetPoint("LEFT", flareflipCheck, "RIGHT", 5,0)
 flareFlipText:SetText("Reverse "..MBF.."'s icon order")
 
-local flareVertCheck = CreateFrame("CheckButton", "flarevertCheck", MarkingBarOpt.childpanel3, "UICheckButtonTemplate")
+local flareVertCheck = CreateFrame("CheckButton", "flarevertCheck", MarkingBarOpt.FlaresOptPg, "UICheckButtonTemplate")
 flareVertCheck:SetPoint("TOP",flareflipCheck,"BOTTOM",0,-5)
 flareVertCheck:SetSize(20,20)
 flareVertCheck:SetScript("OnClick", function(self) MBFlaresDB.vertical = not MBFlaresDB.vertical; MB_flareflipChecker() end)
-local flareVertText = MarkingBarOpt.childpanel3:CreateFontString("flarevertText", "OVERLAY", "ChatFontSmall")
+local flareVertText = MarkingBarOpt.FlaresOptPg:CreateFontString("flarevertText", "OVERLAY", "ChatFontSmall")
 flareVertText:SetPoint("LEFT", flarevertCheck, "RIGHT", 5,0)
 flareVertText:SetText("Display "..MBF.." vertically")
 
-local flareBgCheck = CreateFrame("CheckButton", "flareBgCheck", MarkingBarOpt.childpanel3, "UICheckButtonTemplate")
+local flareBgCheck = CreateFrame("CheckButton", "flareBgCheck", MarkingBarOpt.FlaresOptPg, "UICheckButtonTemplate")
 flareBgCheck:SetPoint("TOP",flarevertCheck,"BOTTOM",0,-5)
 flareBgCheck:SetSize(20,20)
 flareBgCheck:SetScript("OnClick", function(self) MB_bgToggle("flare") end)
-local flareBgText = MarkingBarOpt.childpanel3:CreateFontString("flareBgText", "OVERLAY", "ChatFontSmall")
+local flareBgText = MarkingBarOpt.FlaresOptPg:CreateFontString("flareBgText", "OVERLAY", "ChatFontSmall")
 flareBgText:SetPoint("LEFT", flareBgCheck, "RIGHT", 5,0)
 flareBgText:SetText("Hide "..MBF.."'s background and borders")
 
-local flareToolCheck = CreateFrame("CheckButton", "flareToolCheck", MarkingBarOpt.childpanel3, "UICheckButtonTemplate")
+local flareToolCheck = CreateFrame("CheckButton", "flareToolCheck", MarkingBarOpt.FlaresOptPg, "UICheckButtonTemplate")
 flareToolCheck:SetPoint("TOP",flareBgCheck,"BOTTOM",0,-5)
 flareToolCheck:SetSize(20,20)
 flareToolCheck:SetScript("OnClick", function(self) MBFlaresDB.tooltips = not MBFlaresDB.tooltips end)
-local flareToolText = MarkingBarOpt.childpanel3:CreateFontString("flareToolText", "OVERLAY", "ChatFontSmall")
+local flareToolText = MarkingBarOpt.FlaresOptPg:CreateFontString("flareToolText", "OVERLAY", "ChatFontSmall")
 flareToolText:SetPoint("LEFT", flareToolCheck, "RIGHT", 5,0)
 flareToolText:SetText("Enable "..MBF.."'s tooltips")
 
-local flareAlphaSlider = CreateFrame("Slider", "flareAlphaSlider", MarkingBarOpt.childpanel3, "OptionsSliderTemplate")
+local flareAlphaSlider = CreateFrame("Slider", "flareAlphaSlider", MarkingBarOpt.FlaresOptPg, "OptionsSliderTemplate")
 flareAlphaSlider:SetPoint("TOPLEFT", flareToolCheck, "BOTTOMLEFT",25,-25)
 flareAlphaSlider:SetSize(180,16)
 flareAlphaSlider:SetMinMaxValues(0,1)
@@ -1634,7 +1634,7 @@ flareAlphaSlider:SetOrientation("HORIZONTAL")
 flareAlphaSlider:SetScript("OnValueChanged", function(self) MB_alpha(self,"flare") end)
 flareAlphaSlider:SetScript("OnLoad", function(self) MB_alpha(self,"flare") end)
 
-local flareScaleSlider = CreateFrame("Slider", "flareScaleSlider", MarkingBarOpt.childpanel3, "OptionsSliderTemplate")
+local flareScaleSlider = CreateFrame("Slider", "flareScaleSlider", MarkingBarOpt.FlaresOptPg, "OptionsSliderTemplate")
 flareScaleSlider:SetPoint("TOPLEFT", flareAlphaSlider, "BOTTOMLEFT",0,-25)
 flareScaleSlider:SetSize(180,16)
 flareScaleSlider:SetMinMaxValues(0.5,1.5)
@@ -1847,11 +1847,11 @@ AnnounceResetMsgButton:SetText("Reset to Default Messages")
 -------------------------------------------------------
 -- Profile Page
 -------------------------------------------------------
---MarkingBarOpt.childpanel5 = CreateFrame( "Frame", "optionsProfiles", MarkingBarOpt.panel);
---MarkingBarOpt.childpanel5.name = "Profiles";
---MarkingBarOpt.childpanel5.parent = MarkingBarOpt.panel.name;
---MarkingBarOpt.childpanel5.refresh = function(self) MB_checkUpdater(); MB_Announce_Save(); end
---InterfaceOptions_AddCategory(MarkingBarOpt.childpanel5);
+--MarkingBarOpt.ProfilePg = CreateFrame( "Frame", "optionsProfiles", MarkingBarOpt.panel);
+--MarkingBarOpt.ProfilePg.name = "Profiles";
+--MarkingBarOpt.ProfilePg.parent = MarkingBarOpt.panel.name;
+--MarkingBarOpt.ProfilePg.refresh = function(self) MB_checkUpdater(); MB_Announce_Save(); end
+--InterfaceOptions_AddCategory(MarkingBarOpt.ProfilePg);
 
 -------------------------------------------------------
 -- OnEvent
