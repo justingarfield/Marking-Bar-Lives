@@ -1838,7 +1838,7 @@ local AnnouncetooltipText = MarkingBarOpt.AnnounceOptPg:CreateFontString("Announ
 AnnouncetooltipText:SetPoint("LEFT", AnnouncetooltipCheck, "RIGHT",10,0)
 AnnouncetooltipText:SetText("Add announce text to raid icon tooltips.")
 
-local AnnounceResetMsgButton = CreateFrame("Button", "AnnounceResetMsgButton", MarkingBarOpt.AnnounceOptPg, "UICheckButtonTemplate") --Was OptionsButtonTemplate so need to update proper
+local AnnounceResetMsgButton = CreateFrame("Button", "AnnounceResetMsgButton", MarkingBarOpt.AnnounceOptPg, "UIPanelButtonTemplate") --Was OptionsButtonTemplate until patch 10.0.0
 AnnounceResetMsgButton:SetPoint("BOTTOMRIGHT", MarkingBarOpt.AnnounceOptPg, "BOTTOMRIGHT",-5,5)
 AnnounceResetMsgButton:SetScript("OnClick", function(self) MB_reset_msg(); MB_checkUpdater(); end)
 AnnounceResetMsgButton:SetSize(200,20)
