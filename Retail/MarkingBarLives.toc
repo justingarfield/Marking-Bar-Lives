@@ -1,12 +1,12 @@
-## Interface: 100000
+## Interface: 100002
 ## Title: Marking|cff69ccf0Bar|cffff0000Lives
 ## Notes: Quickly and easily add raid icons and world flairs, and announce them in chat.
 ## Author: Telryu-Feathermoon US (Previously Vilandra-Blade's Edge US & maintained by Kvee-Magtheridon EU)
 ## Dependencies: 
-## Version: 10.0.0
+## Version: 10.0.2
 ## SavedVariablesPerCharacter: MBDB, MBCtrlDB, MBFlaresDB
 ## SavedVariables: MBGLOBAL
-## OptionalDependencies: WagoAnalytics
+## OptionalDependencies: 
 
 ## X-Category: Chat & Communication
 ## X-License: GPL v3
