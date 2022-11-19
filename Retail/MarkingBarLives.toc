@@ -6,7 +6,7 @@
 ## Version: 10.0.2
 ## SavedVariablesPerCharacter: MBDB, MBCtrlDB, MBFlaresDB
 ## SavedVariables: MBGLOBAL
-## OptionalDependencies: 
+## OptionalDependencies: WagoAnalytics
 
 ## X-Category: Chat & Communication
 ## X-License: GPL v3
