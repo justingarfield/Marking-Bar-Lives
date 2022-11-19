@@ -1916,7 +1916,7 @@ MB_OnUpdate:SetScript("OnEvent", function(self,event,addon,...)
 		MB_savepositions()
 	end
 	if (event=="PLAYER_LOGIN") then
-		MB_setpositions()
+--		MB_setpositions()
 	end
 end
 )
