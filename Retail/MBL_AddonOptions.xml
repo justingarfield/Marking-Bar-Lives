@@ -1,0 +1,26 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+    <Script file="MBL_AddonOptions.lua"/>
+
+    <Frame name="MarkingBarOpt">
+        <Scripts>
+            <OnLoad>
+                ExamplePanel_OnLoad(self);
+            </OnLoad>
+        </Scripts>
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString name="MBOptionsText" inherits="ChatFontNormal" text="|cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff|cffe1a500 Options">
+                    <Anchors>
+                        <Anchor point="TOP" relativePoint="TOP" y="-10" />
+                    </Anchors>
+                </FontString>
+                <FontString name="OptionsText" inherits="ChatFontSmall" text="Expand the MarkingBarLives (+) on the left to see the options.">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="25" y="-30" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+    </Frame>
+</Ui>

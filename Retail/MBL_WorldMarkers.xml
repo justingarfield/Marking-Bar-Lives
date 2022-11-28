@@ -1,0 +1,271 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+    <Frame name="MBL_WorldMarkers" parent="UIParent" inherits="BackdropTemplate" enableMouse="true" movable="true" clampedToScreen="false">
+        <KeyValues>
+            <KeyValue key="backdropInfo" value="MB_BORDERLESS_BACKDROP" type="global"/>
+            <KeyValue key="backdropColor" value="MB_MAIN_FRAME_BACKDROP_COLOR" type="global"/>
+            <KeyValue key="backdropColorAlpha" value="0" type="number"/>
+        </KeyValues>
+        <Size x="180" y="35"/>
+        <Anchors>
+            <Anchor point="TOP" relativeTo="UIParent" relativePoint="TOP" y="-40"/>
+        </Anchors>
+        <Frames>
+            <Frame name="MBFlares_MBL_RaidTargeting_Mover" inherits="BackdropTemplate" enableMouse="true" movable="true">
+                <KeyValues>
+                    <KeyValue key="backdropInfo" value="MB_DEFAULT_BACKDROP" type="global"/>
+                    <KeyValue key="backdropColor" value="MB_MOVER_LEFT_FRAME_BACKDROP_COLOR" type="global"/>
+                    <KeyValue key="backdropColorAlpha" value="0.7" type="number"/>
+                </KeyValues>
+                <Size x="20" y="35"/>
+                <Anchors>
+                    <Anchor point="RIGHT" relativeTo="MBL_WorldMarkers" relativePoint="LEFT" />
+                </Anchors>
+                <Scripts>
+                    <OnMouseDown inherit="prepend">
+                        if (button=="LeftButton") then MBL_WorldMarkers:StartMoving() end
+                    </OnMouseDown>
+                    <OnMouseUp inherit="prepend">
+                        MBL_WorldMarkers:StopMovingOrSizing()
+                    </OnMouseUp>
+                </Scripts>
+            </Frame>
+            <Frame name="MB_flareFrame" inherits="BackdropTemplate" enableMouse="true" movable="true">
+                <KeyValues>
+                    <KeyValue key="backdropInfo" value="MB_DEFAULT_BACKDROP" type="global"/>
+                    <KeyValue key="backdropColor" value="MB_MOVER_LEFT_FRAME_BACKDROP_COLOR" type="global"/>
+                    <KeyValue key="backdropColorAlpha" value="0.7" type="number"/>
+                </KeyValues>
+                <Size x="255" y="35"/>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="MBL_WorldMarkers" relativePoint="LEFT" />
+                </Anchors>
+                <Frames>
+                    <Button name="flareWhite" inherits="SecureActionButtonTemplate" registerForClicks="AnyDown">
+                        <Size x="25" y="25"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="MB_flareFrame" relativePoint="TOPLEFT" x="5" y="-5"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\MiniMap\PartyRaidBlips">
+                            <TexCoords left="0.5" right="0.625" top="0" bottom="0.25"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnEnter>
+                                if (MBFlaresDB.tooltips) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    GameTooltip:AddLine("Skull world marker",0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="flareRed" inherits="SecureActionButtonTemplate" registerForClicks="AnyDown">
+                        <Size x="25" y="25"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="flareWhite" relativePoint="RIGHT"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\MiniMap\PartyRaidBlips">
+                            <TexCoords left="0.625" right="0.75" top="0" bottom="0.25"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnEnter>
+                                if (MBFlaresDB.tooltips) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    GameTooltip:AddLine("Cross world marker",0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="flareBlue" inherits="SecureActionButtonTemplate" registerForClicks="AnyDown">
+                        <Size x="25" y="25"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="flareRed" relativePoint="RIGHT"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\MiniMap\PartyRaidBlips">
+                            <TexCoords left="0.75" right="0.875" top="0" bottom="0.25"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnEnter>
+                                if (MBFlaresDB.tooltips) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    GameTooltip:AddLine("Square world marker",0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="flareSilver" inherits="SecureActionButtonTemplate" registerForClicks="AnyDown">
+                        <Size x="25" y="25"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="flareBlue" relativePoint="RIGHT"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\MiniMap\PartyRaidBlips">
+                            <TexCoords left="0.875" right="1" top="0" bottom="0.25"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnEnter>
+                                if (MBFlaresDB.tooltips) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    GameTooltip:AddLine("Moon world marker",0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="flareGreen" inherits="SecureActionButtonTemplate" registerForClicks="AnyDown">
+                        <Size x="25" y="25"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="flareSilver" relativePoint="RIGHT"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\MiniMap\PartyRaidBlips">
+                            <TexCoords left="0.25" right="0.375" top="0" bottom="0.25"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnEnter>
+                                if (MBFlaresDB.tooltips) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    GameTooltip:AddLine("Triangle world marker",0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="flarePurple" inherits="SecureActionButtonTemplate" registerForClicks="AnyDown">
+                        <Size x="25" y="25"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="flareGreen" relativePoint="RIGHT"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\MiniMap\PartyRaidBlips">
+                            <TexCoords left="0" right="0.125" top="0.25" bottom="0.5"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnEnter>
+                                if (MBFlaresDB.tooltips) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    GameTooltip:AddLine("Diamond world marker",0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="flareOrange" inherits="SecureActionButtonTemplate" registerForClicks="AnyDown">
+                        <Size x="25" y="25"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="flarePurple" relativePoint="RIGHT"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\MiniMap\PartyRaidBlips">
+                            <TexCoords left="0.25" right="0.375" top="0.25" bottom="0.5"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnEnter>
+                                if (MBFlaresDB.tooltips) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    GameTooltip:AddLine("Circle world marker",0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="flareYellow" inherits="SecureActionButtonTemplate" registerForClicks="AnyDown">
+                        <Size x="25" y="25"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="flareOrange" relativePoint="RIGHT"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\MiniMap\PartyRaidBlips">
+                            <TexCoords left="0.375" right="0.5" top="0" bottom="0.25"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnEnter>
+                                if (MBFlaresDB.tooltips) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    GameTooltip:AddLine("Star world marker",0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="flareClear" inherits="SecureActionButtonTemplate" registerForClicks="AnyDown">
+                        <Size x="15" y="15"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="flareYellow" relativePoint="RIGHT"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\Glues\LoadingScreens\DynamicElements">
+                            <TexCoords left="0" right="0.5" top="0" bottom="0.5"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnEnter>
+                                if (MBFlaresDB.tooltips) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    GameTooltip:AddLine("Clear all world markers.",0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="flarelockIcon" inherits="SecureActionButtonTemplate" enableMouse="true">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="flareClear" relativePoint="RIGHT" x="5"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\AddOns\MarkingBarLives\resources\Glues-Addon-Icons">
+                            <TexCoords left="0.25" right="0.5" top="0" bottom="1"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnClick>
+                                MB_lockToggle("flare")
+                            </OnClick>
+                            <OnEnter>
+                                if (MBFlaresDB.tooltips) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    GameTooltip:AddLine("Lock/Unlock",0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                </Frames>
+            </Frame>
+        </Frames>
+    </Frame>
+</Ui>

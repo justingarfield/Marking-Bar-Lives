@@ -1,0 +1,166 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+    <Frame name="MBL_RaidControls" parent="UIParent" inherits="BackdropTemplate" enableMouse="true" movable="true">
+        <KeyValues>
+            <KeyValue key="backdropInfo" value="MB_DEFAULT_BACKDROP" type="global"/>
+            <KeyValue key="backdropColor" value="MB_MOVER_LEFT_FRAME_BACKDROP_COLOR" type="global"/>
+            <KeyValue key="backdropColorAlpha" value="0.7" type="number"/>
+        </KeyValues>
+        <Size x="120" y="35"/>
+        <Anchors>
+            <Anchor point="LEFT" relativeTo="MBL_RaidTargeting_Icons" relativePoint="RIGHT" x="5"/>
+        </Anchors>
+        <Frames>
+            <Button name="announceIcon" enableMouse="true">
+                <Size x="20" y="20"/>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="MBL_RaidControls" relativePoint="LEFT" x="10"/>
+                </Anchors>
+                <NormalTexture file="Interface\AddOns\MarkingBarLives\resources\announce">
+                    <TexCoords left="0" right="1" top="0" bottom="1"/>
+                </NormalTexture>
+                <Scripts>
+                    <OnClick>
+                        MB_Announce()
+                    </OnClick>
+                    <OnEnter>
+                        if (MBCtrlDB.tooltips==true) then
+                            GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                            GameTooltip:ClearLines();
+                            GameTooltip:AddLine("Announce to Chat", 0.88, 0.65, 0);
+                            GameTooltip:Show()
+                        end
+                    </OnEnter>
+                    <OnLeave>
+                        GameTooltip:Hide()
+                    </OnLeave>
+                </Scripts>
+            </Button>
+            <Button name="readyCheck" enableMouse="true">
+                <Size x="20" y="20"/>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="announceIcon" relativePoint="RIGHT"/>
+                </Anchors>
+                <NormalTexture file="Interface\RaidFrame\ReadyCheck-Ready">
+                    <TexCoords left="0" right="1" top="0" bottom="1"/>
+                </NormalTexture>
+                <Scripts>
+                    <OnClick>
+                        DoReadyCheck()
+                    </OnClick>
+                    <OnEnter>
+                        if (MBCtrlDB.tooltips==true) then
+                            GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                            GameTooltip:ClearLines();
+                            GameTooltip:AddLine("Ready Check", 0.88, 0.65, 0);
+                            GameTooltip:Show()
+                        end
+                    </OnEnter>
+                    <OnLeave>
+                        GameTooltip:Hide()
+                    </OnLeave>
+                </Scripts>
+            </Button>
+            <Button name="roleCheck" enableMouse="true">
+                <Size x="20" y="20"/>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="readyCheck" relativePoint="RIGHT"/>
+                </Anchors>
+                <NormalTexture file="Interface\RaidFrame\ReadyCheck-Waiting">
+                    <TexCoords left="0" right="1" top="0" bottom="1"/>
+                </NormalTexture>
+                <Scripts>
+                    <OnClick>
+                        InitiateRolePoll()
+                    </OnClick>
+                    <OnEnter>
+                        if (MBCtrlDB.tooltips==true) then
+                            GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                            GameTooltip:ClearLines();
+                            GameTooltip:AddLine("Role Poll", 0.88, 0.65, 0);
+                            GameTooltip:Show()
+                        end
+                    </OnEnter>
+                    <OnLeave>
+                        GameTooltip:Hide()
+                    </OnLeave>
+                </Scripts>
+            </Button>
+            <Button name="optIcon" enableMouse="true" registerForClicks="AnyDown">
+                <Size x="20" y="20"/>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="roleCheck" relativePoint="RIGHT"/>
+                </Anchors>
+                <NormalTexture file="Interface\AddOns\MarkingBarLives\resources\Gear_64">
+                    <TexCoords left="0" right="0.5" top="0" bottom="0.5"/>
+                </NormalTexture>
+                <Scripts>
+                    <OnClick>
+                        if button == "RightButton" then
+                            InterfaceOptionsFrame_OpenToCategory(MarkingBarOpt.AnnounceOptPg)
+                        else
+                            InterfaceOptionsFrame_OpenToCategory(MarkingBarOpt.MarkerOptPg)
+                        end
+                    </OnClick>
+                    <OnEnter>
+                        if (MBCtrlDB.tooltips==true) then
+                            GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                            GameTooltip:ClearLines();
+                            GameTooltip:AddLine("Options", 0.88, 0.65, 0);
+                            GameTooltip:Show()
+                        end
+                    </OnEnter>
+                    <OnLeave>
+                        GameTooltip:Hide()
+                    </OnLeave>
+                </Scripts>
+            </Button>
+            <Button name="ctrlLockIcon" enableMouse="true" alpha="1">
+                <Size x="20" y="20"/>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="optIcon" relativePoint="RIGHT"/>
+                </Anchors>
+                <NormalTexture file="Interface\AddOns\MarkingBarLives\resources\Glues-Addon-Icons">
+                    <TexCoords left="0.25" right="0.5" top="0" bottom="1"/>
+                </NormalTexture>
+                <Scripts>
+                    <OnClick>
+                        MB_lockToggle("ctrl")
+                    </OnClick>
+                    <OnEnter>
+                        if (MBCtrlDB.tooltips==true) then
+                            GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                            GameTooltip:ClearLines();
+                            GameTooltip:AddLine("Lock/Unlock Controls", 0.88, 0.65, 0);
+                            GameTooltip:Show()
+                        end
+                    </OnEnter>
+                    <OnLeave>
+                        GameTooltip:Hide()
+                    </OnLeave>
+                </Scripts>
+            </Button>
+            <Frame name="moverRight" inherits="BackdropTemplate" enableMouse="true" movable="true" alpha="1">
+                <KeyValues>
+                    <KeyValue key="backdropInfo" value="MB_DEFAULT_BACKDROP" type="global"/>
+                    <KeyValue key="backdropColor" value="MB_MOVER_LEFT_FRAME_BACKDROP_COLOR" type="global"/>
+                    <KeyValue key="backdropColorAlpha" value="0.7" type="number"/>
+                </KeyValues>
+                <Size x="20" y="35"/>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="MBL_RaidControls" relativePoint="RIGHT" />
+                </Anchors>
+                <Scripts>
+                    <OnMouseDown inherit="prepend">
+                        if (button=="LeftButton") then
+                            MBL_RaidControls:StartMoving()
+                        end
+                    </OnMouseDown>
+                    <OnMouseUp inherit="prepend">
+                        MBL_RaidControls:StopMovingOrSizing()
+                    </OnMouseUp>
+                </Scripts>
+            </Frame>
+        </Frames>
+    </Frame>
+</Ui>
