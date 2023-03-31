@@ -14,5 +14,10 @@
 ## X-Wago-ID: anKWn46E
 
 MarkingBarLives.lua
+MBL_RaidTargeting.xml
+# Need to break dependency on RaidTargeting frame existing first
+MBL_RaidControls.xml
+MBL_WorldMarkers.xml
+MBL_AddonOptions.xml
 
-Libs/WagoAnalytics/Shim.lua
+#Libs/WagoAnalytics/Shim.lua

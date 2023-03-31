@@ -1,0 +1,1210 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+    <Script file="MBL_AddonOptions.lua"/>
+
+    <Frame name="MarkingBarOpt">
+        <Scripts>
+            <OnLoad>
+                MarkingBarOpt_OnLoad(self);
+            </OnLoad>
+        </Scripts>
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString name="MBOptionsText" inherits="ChatFontNormal">
+                    <Anchors>
+                        <Anchor point="TOP" relativePoint="TOP" y="-10" />
+                    </Anchors>
+                </FontString>
+                <FontString name="OptionsText" inherits="ChatFontSmall" text="Expand the MarkingBarLives (+) on the left to see the options.">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="25" y="-30" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+            <Frame name="versFooter" inherits="BackdropTemplate">
+                <KeyValues>
+                    <KeyValue key="backdropInfo" value="MB_DEFAULT_BACKDROP" type="global"/>
+                    <KeyValue key="backdropColor" value="MB_MOVER_LEFT_FRAME_BACKDROP_COLOR" type="global"/>
+                    <KeyValue key="backdropColorAlpha" value="0.9" type="number"/>
+                    <KeyValue key="backdropBorderColor" value="MB_BACKDROP_BORDER_COLOR" type="global"/>
+                    <KeyValue key="backdropBorderColorAlpha" value="0.5" type="number"/>
+                </KeyValues>
+                <Anchors>
+                    <Anchor point="BOTTOM" relativePoint="BOTTOM" y="5"/>
+                </Anchors>
+                <Size x="175" y="23"/>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString name="versionText" inherits="ChatFontSmall" text="">
+                            <Anchors>
+                                <Anchor point="TOP" relativeTo="versFooter" relativePoint="TOP" y="-5"/>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Scripts>
+                    <OnLoad>
+                        versFooter_OnLoad(self);
+                    </OnLoad>
+                </Scripts>
+            </Frame>
+            <Frame name="MarkerOptPg">
+                <Scripts>
+                    <OnLoad>
+                        MarkerOptPg_OnLoad(self);
+                    </OnLoad>
+                </Scripts>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString name="markerOptionsText" inherits="ChatFontNormal">
+                            <Anchors>
+                                <Anchor point="TOP" relativePoint="TOP" y="-10" />
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <CheckButton name="showCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="25" y="-30"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.shown = not MBDB.shown;
+                                MB_targetChecker("main")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="showText" inherits="ChatFontSmall" text="Always show |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff with or without a target">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                                <FontString name="partyRaidText" inherits="ChatFontSmall" text="Show |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff when...">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" y="-5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="aloneCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="partyRaidText" relativePoint="BOTTOMLEFT" y="-2"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.aloneShow = not MBDB.aloneShow;
+                                MB_targetChecker("main")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="aloneText" inherits="ChatFontSmall" text=" Alone">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="partyCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="aloneText" relativePoint="RIGHT" x="20"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.partyShow = not MBDB.partyShow;
+                                MB_targetChecker("main")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="partyText" inherits="ChatFontSmall" text=" in a Party ">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="raidCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="partyText" relativePoint="RIGHT" x="20"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.raidShow = not MBDB.raidShow;
+                                MB_targetChecker("main")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="raidText" inherits="ChatFontSmall" text=" in a Raid ">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="lockCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="aloneCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MB_lockToggle("main")
+                                MB_checkUpdater()
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="lockText" inherits="ChatFontSmall" text="Lock |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff's position">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="clampCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="lockCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.clamped = not MBDB.clamped;
+                                MBL_RaidTargeting:SetClampedToScreen(MBDB.clamped)
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="clampText" inherits="ChatFontSmall" text="Keep |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff inside screen edges">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="flipCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="clampCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.flipped = not MBDB.flipped;
+                                MB_flipChecker()
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="flipText" inherits="ChatFontSmall" text="Reverse |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff's icon order">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="vertCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="flipCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.vertical = not MBDB.vertical;
+                                MB_flipChecker()
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="vertText" inherits="ChatFontSmall" text="Display {|cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff vertically">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="bgCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="vertCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MB_bgToggle("main")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="bgText" inherits="ChatFontSmall" text="Hide |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff's background and border">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="toolCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="bgCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.tooltips = not MBDB.tooltips
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="toolText" inherits="ChatFontSmall" text="Enable |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff's tooltips">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <Slider name="alphaSlider" inherits="OptionsSliderTemplate" defaultValue="1" valueStep="0.01" orientation="HORIZONTAL" minValue="0" maxValue="1">
+                        <Size x="180" y="16"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="toolCheck" relativePoint="BOTTOMLEFT" x="25" y="-25"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                MB_alpha(self, "main")
+                            </OnValueChanged>
+                            <OnLoad>
+                                MB_alpha(self, "main")
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+                    <Slider name="scaleSlider" inherits="OptionsSliderTemplate" defaultValue="1" valueStep="0.01" orientation="HORIZONTAL" minValue="0.5" maxValue="1.5">
+                        <Size x="180" y="16"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="alphaSlider" relativePoint="BOTTOMLEFT" y="-25"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                MB_scale(self, "main")
+                            </OnValueChanged>
+                            <OnLoad>
+                                MB_scale(self, "main")
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+                </Frames>
+            </Frame>
+            <Frame name="ControlOptPg">
+                <Scripts>
+                    <OnLoad>
+                        ControlOptPg_OnLoad(self);
+                    </OnLoad>
+                </Scripts>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString name="ctrlOptionsText" inherits="ChatFontNormal">
+                            <Anchors>
+                                <Anchor point="TOP" relativePoint="TOP" y="-10" />
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <CheckButton name="ctrlShowCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="25" y="-30"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBCtrlDB.shown = not MBCtrlDB.shown;
+                                MB_targetChecker("ctrl")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="ctrlShowText" inherits="ChatFontSmall" text="Always show |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff controls  with or without a target">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                                <FontString name="ctrlPartyRaidText" inherits="ChatFontSmall" text="Show |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff controls when...">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" y="-5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="ctrlAloneCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ctrlPartyRaidText" relativePoint="BOTTOMLEFT" y="-2"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBCtrlDB.aloneShow = not MBCtrlDB.aloneShow;
+                                MB_targetChecker("ctrl")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="ctrlAloneText" inherits="ChatFontSmall" text=" Alone">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="ctrlPartyCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="ctrlAloneText" relativePoint="RIGHT" x="20"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBCtrlDB.partyShow = not MBCtrlDB.partyShow;
+                                MB_targetChecker("ctrl")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="ctrlPartyText" inherits="ChatFontSmall" text=" in a Party ">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="ctrlRaidCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="ctrlPartyText" relativePoint="RIGHT" x="20"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBCtrlDB.raidShow = not MBCtrlDB.raidShow;
+                                MB_targetChecker("ctrl")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="ctrlRaidText" inherits="ChatFontSmall" text=" in a Raid ">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="ctrlCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="ctrlAloneCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MB_ctrlLockToggle();
+                                MB_checkUpdater();
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="ctrlText" inherits="ChatFontSmall" text="Connect |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff's controls to the raid icons.">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="ctrlLockCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="ctrlCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MB_lockToggle("ctrl");
+                                MB_checkUpdater();
+                            </OnClick>
+                            <OnEnter>
+                                GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                GameTooltip:ClearLines();
+                                GameTooltip:AddLine("Note: Changing this options will disconnect controls from the raid icons.", 0.88, 0.65, 0);
+                                GameTooltip:Show()
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="ctrlLockText" inherits="ChatFontSmall" text="Lock |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff control's position.">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="ctrlClampCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="ctrlLockCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBCtrlDB.clamped = not MBCtrlDB.clamped;
+                                MBL_RaidControls:SetClampedToScreen(MBCtrlDB.clamped)
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="ctrlClampText" inherits="ChatFontSmall" text="Keep |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff controls  inside screen edges">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="ctrlVertCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="ctrlClampCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBCtrlDB.vertical = not MBCtrlDB.vertical;
+                                if MBDB.ctrlLock then
+                                    MB_ctrlUnlock()
+                                end;
+                                MB_flipChecker();
+                                MB_checkUpdater()
+                            </OnClick>
+                            <OnEnter>
+                                GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                GameTooltip:ClearLines();
+                                GameTooltip:AddLine("Note: Changing this options will disconnect controls from the raid icons.",0.88,0.65,0);
+                                GameTooltip:Show()
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="ctrlvertText" inherits="ChatFontSmall" text="Display |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff controls  vertically">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="ctrlBgCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="ctrlVertCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MB_bgToggle("ctrl")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="ctrlBgText" inherits="ChatFontSmall" text="Hide |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff controls 's background and borders">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="ctrlToolCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="ctrlBgCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBCtrlDB.tooltips = not MBCtrlDB.tooltips;
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="ctrlToolText" inherits="ChatFontSmall" text="Enable |cffe1a500Marking|cff69ccf0Bar|cffff0000Lives|cffffffff controls 's tooltips">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <Slider name="ctrlAlphaSlider" inherits="OptionsSliderTemplate" defaultValue="1" valueStep="0.01" orientation="HORIZONTAL" minValue="0" maxValue="1">
+                        <Size x="180" y="16"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ctrlToolCheck" relativePoint="BOTTOMLEFT" x="25" y="-25"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                MB_alpha(self, "ctrl")
+                            </OnValueChanged>
+                            <OnLoad>
+                                MB_alpha(self, "ctrl")
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+                    <Slider name="ctrlScaleSlider" inherits="OptionsSliderTemplate" defaultValue="1" valueStep="0.01" orientation="HORIZONTAL" minValue="0.5" maxValue="1.5">
+                        <Size x="180" y="16"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="ctrlAlphaSlider" relativePoint="BOTTOMLEFT" y="-25"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                MB_scale(self, "ctrl")
+                            </OnValueChanged>
+                            <OnLoad>
+                                MB_scale(self, "ctrl")
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+                </Frames>
+            </Frame>
+            <Frame name="FlaresOptPg">
+                <Scripts>
+                    <OnLoad>
+                        FlaresOptPg_OnLoad(self);
+                    </OnLoad>
+                </Scripts>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString name="flareOptionsText" inherits="ChatFontNormal">
+                            <Anchors>
+                                <Anchor point="TOP" relativePoint="TOP" y="-10" />
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <CheckButton name="flareShowCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="25" y="-30"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBFlaresDB.shown = not MBFlaresDB.shown;
+                                MB_targetChecker("flare")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="flareShowText" inherits="ChatFontSmall" text="Always show |cffe1a500MBL|cff69ccf0Flares|cffffffff  with or without a target">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                                <FontString name="flarePartyRaidText" inherits="ChatFontSmall" text="Show |cffe1a500MBL|cff69ccf0Flares|cffffffff when...">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" y="-5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="flareAloneCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="flarePartyRaidText" relativePoint="BOTTOMLEFT" y="-2"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBFlaresDB.aloneShow = not MBFlaresDB.aloneShow;
+                                MB_targetChecker("flare")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="flareAloneText" inherits="ChatFontSmall" text=" Alone">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="flarePartyCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="flareAloneText" relativePoint="RIGHT" x="20"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBFlaresDB.partyShow = not MBFlaresDB.partyShow;
+                                MB_targetChecker("flare")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="flarePartyText" inherits="ChatFontSmall" text=" in a Party ">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="flareRaidCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="flarePartyText" relativePoint="RIGHT" x="20"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBFlaresDB.raidShow = not MBFlaresDB.raidShow;
+                                MB_targetChecker("flare")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="flareRaidText" inherits="ChatFontSmall" text=" in a Raid ">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="flareLockCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="flareAloneCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MB_lockToggle("flare")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="flareLockText" inherits="ChatFontSmall" text="Lock |cffe1a500MBL|cff69ccf0Flares|cffffffff's position">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="flareClampCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="flareLockCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBFlaresDB.clamped = not MBFlaresDB.clamped;
+                                MBL_WorldMarkers:SetClampedToScreen(MBFlaresDB.clamped)
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="flareClampText" inherits="ChatFontSmall" text="Keep |cffe1a500MBL|cff69ccf0Flares|cffffffff inside screen edges">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="flareflipCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="flareClampCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBFlaresDB.flipped = not MBFlaresDB.flipped;
+                                MB_flareflipChecker()
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="flareflipText" inherits="ChatFontSmall" text="Reverse |cffe1a500MBL|cff69ccf0Flares|cffffffff's icon order">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="flarevertCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="flareflipCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBFlaresDB.vertical = not MBFlaresDB.vertical;
+                                MB_flareflipChecker()
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="flarevertText" inherits="ChatFontSmall" text="Display |cffe1a500MBL|cff69ccf0Flares|cffffffff vertically">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="flareBgCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="flarevertCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MB_bgToggle("flare")
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="flareBgText" inherits="ChatFontSmall" text="Hide |cffe1a500MBL|cff69ccf0Flares|cffffffff's background and borders">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <CheckButton name="flareToolCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="flareBgCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBFlaresDB.tooltips = not MBFlaresDB.tooltips
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="flareToolText" inherits="ChatFontSmall" text="Enable |cffe1a500MBL|cff69ccf0Flares|cffffffff's tooltips">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="5"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <Slider name="flareAlphaSlider" inherits="OptionsSliderTemplate" defaultValue="1" valueStep="0.01" orientation="HORIZONTAL" minValue="0" maxValue="1">
+                        <Size x="180" y="16"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="flareToolCheck" relativePoint="BOTTOMLEFT" x="25" y="-25"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                MB_alpha(self, "flare")
+                            </OnValueChanged>
+                            <OnLoad>
+                                MB_alpha(self, "flare")
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+                    <Slider name="flareScaleSlider" inherits="OptionsSliderTemplate" defaultValue="1" valueStep="0.01" orientation="HORIZONTAL" minValue="0.5" maxValue="1.5">
+                        <Size x="180" y="16"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="flareAlphaSlider" relativePoint="BOTTOMLEFT" y="-25"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnValueChanged>
+                                MB_scale(self, "flare")
+                            </OnValueChanged>
+                            <OnLoad>
+                                MB_scale(self, "flare")
+                            </OnLoad>
+                        </Scripts>
+                    </Slider>
+                </Frames>
+            </Frame>
+            <Frame name="AnnounceOptPg">
+                <Scripts>
+                    <OnLoad>
+                        AnnounceOptPg_OnLoad(self);
+                    </OnLoad>
+                </Scripts>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString name="AnnounceOptionsText" inherits="ChatFontNormal">
+                            <Anchors>
+                                <Anchor point="TOP" relativePoint="TOP" y="-10" />
+                            </Anchors>
+                        </FontString>
+                        <FontString name="AnnounceInstText" inherits="ChatFontSmall" text="Send">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-30" />
+                            </Anchors>
+                        </FontString>
+                        <FontString name="AnnounceInstText2" inherits="ChatFontSmall" text="Enter the chat messages to send:">
+                            <Anchors>
+                                <Anchor point="TOP" relativePoint="TOP" y="-30" />
+                            </Anchors>
+                        </FontString>
+                        <FontString name="AnnouncerwText" inherits="ChatFontSmall" text="Enter the chat message to send as a Raid Warning: (Only in a Raid)">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" y="-15" />
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <CheckButton name="AnnounceIntroCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-50"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.announce_intro = not MBDB.announce_intro
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+                    <EditBox name="AnnounceIntroMsg" inherits="InputBoxTemplate" autoFocus="false">
+                        <Size x="320" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnounceIntroCheck" relativePoint="RIGHT" x="10"/>
+                        </Anchors>
+                        <FontString font="Fonts\ARIALN.TTF">
+                            <FontHeight val="12"/>
+                        </FontString>
+                    </EditBox>
+                    <CheckButton name="AnnounceskullCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="AnnounceIntroCheck" relativePoint="BOTTOM" y="-15"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.announce_skull = not MBDB.announce_skull
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+                    <EditBox name="AnnounceskullMsg" inherits="InputBoxTemplate" autoFocus="false">
+                        <Size x="320" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnounceskullCheck" relativePoint="RIGHT" x="10"/>
+                        </Anchors>
+                        <FontString font="Fonts\ARIALN.TTF">
+                            <FontHeight val="12"/>
+                        </FontString>
+                    </EditBox>
+                    <Button name="AnnounceSkullIcon" enableMouse="false">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnounceskullMsg" relativePoint="RIGHT" x="5"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0.75" right="1" top="0.25" bottom="0.5"/>
+                        </NormalTexture>
+                    </Button>
+                    <CheckButton name="AnnouncecrossCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="AnnounceskullCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.announce_cross = not MBDB.announce_cross
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+                    <EditBox name="AnnouncecrossMsg" inherits="InputBoxTemplate" autoFocus="false">
+                        <Size x="320" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncecrossCheck" relativePoint="RIGHT" x="10"/>
+                        </Anchors>
+                        <FontString font="Fonts\ARIALN.TTF">
+                            <FontHeight val="12"/>
+                        </FontString>
+                    </EditBox>
+                    <Button name="AnnouncecrossIcon" enableMouse="false">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncecrossMsg" relativePoint="RIGHT" x="5"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0.5" right="0.75" top="0.25" bottom="0.5"/>
+                        </NormalTexture>
+                    </Button>
+                    <CheckButton name="AnnouncesquareCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="AnnouncecrossCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.announce_square = not MBDB.announce_square
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+                    <EditBox name="AnnouncesquareMsg" inherits="InputBoxTemplate" autoFocus="false">
+                        <Size x="320" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncesquareCheck" relativePoint="RIGHT" x="10"/>
+                        </Anchors>
+                        <FontString font="Fonts\ARIALN.TTF">
+                            <FontHeight val="12"/>
+                        </FontString>
+                    </EditBox>
+                    <Button name="AnnouncesquareIcon" enableMouse="false">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncesquareMsg" relativePoint="RIGHT" x="5"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0.25" right="0.5" top="0.25" bottom="0.5"/>
+                        </NormalTexture>
+                    </Button>
+                    <CheckButton name="AnnouncemoonCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="AnnouncesquareCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.announce_moon = not MBDB.announce_moon
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+                    <EditBox name="AnnouncemoonMsg" inherits="InputBoxTemplate" autoFocus="false">
+                        <Size x="320" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncemoonCheck" relativePoint="RIGHT" x="10"/>
+                        </Anchors>
+                        <FontString font="Fonts\ARIALN.TTF">
+                            <FontHeight val="12"/>
+                        </FontString>
+                    </EditBox>
+                    <Button name="AnnouncemoonIcon" enableMouse="false">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncemoonMsg" relativePoint="RIGHT" x="5"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0" right="0.25" top="0.25" bottom="0.5"/>
+                        </NormalTexture>
+                    </Button>
+                    <CheckButton name="AnnouncetriangleCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="AnnouncemoonCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.announce_triangle = not MBDB.announce_triangle
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+                    <EditBox name="AnnouncetriangleMsg" inherits="InputBoxTemplate" autoFocus="false">
+                        <Size x="320" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncetriangleCheck" relativePoint="RIGHT" x="10"/>
+                        </Anchors>
+                        <FontString font="Fonts\ARIALN.TTF">
+                            <FontHeight val="12"/>
+                        </FontString>
+                    </EditBox>
+                    <Button name="AnnouncetriangleIcon" enableMouse="false">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncetriangleMsg" relativePoint="RIGHT" x="5"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0.75" right="1" top="0" bottom="0.25"/>
+                        </NormalTexture>
+                    </Button>
+                    <CheckButton name="AnnouncediamondCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="AnnouncetriangleCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.announce_diamond = not MBDB.announce_diamond
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+                    <EditBox name="AnnouncediamondMsg" inherits="InputBoxTemplate" autoFocus="false">
+                        <Size x="320" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncediamondCheck" relativePoint="RIGHT" x="10"/>
+                        </Anchors>
+                        <FontString font="Fonts\ARIALN.TTF">
+                            <FontHeight val="12"/>
+                        </FontString>
+                    </EditBox>
+                    <Button name="AnnouncediamondIcon" enableMouse="false">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncediamondMsg" relativePoint="RIGHT" x="5"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0.5" right="0.75" top="0" bottom="0.25"/>
+                        </NormalTexture>
+                    </Button>
+                    <CheckButton name="AnnouncecircleCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="AnnouncediamondCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.announce_circle = not MBDB.announce_circle
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+                    <EditBox name="AnnouncecircleMsg" inherits="InputBoxTemplate" autoFocus="false">
+                        <Size x="320" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncecircleCheck" relativePoint="RIGHT" x="10"/>
+                        </Anchors>
+                        <FontString font="Fonts\ARIALN.TTF">
+                            <FontHeight val="12"/>
+                        </FontString>
+                    </EditBox>
+                    <Button name="AnnouncecircleIcon" enableMouse="false">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncecircleMsg" relativePoint="RIGHT" x="5"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0.25" right="0.5" top="0" bottom="0.25"/>
+                        </NormalTexture>
+                    </Button>
+                    <CheckButton name="AnnouncestarCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="AnnouncecircleCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.announce_star = not MBDB.announce_star
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+                    <EditBox name="AnnouncestarMsg" inherits="InputBoxTemplate" autoFocus="false">
+                        <Size x="320" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncestarCheck" relativePoint="RIGHT" x="10"/>
+                        </Anchors>
+                        <FontString font="Fonts\ARIALN.TTF">
+                            <FontHeight val="12"/>
+                        </FontString>
+                    </EditBox>
+                    <Button name="AnnouncestarIcon" enableMouse="false">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncestarMsg" relativePoint="RIGHT" x="5"/>
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0" right="0.25" top="0" bottom="0.25"/>
+                        </NormalTexture>
+                    </Button>
+                    <CheckButton name="AnnouncefooterCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="AnnouncestarCheck" relativePoint="BOTTOM" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.announce_footer = not MBDB.announce_footer
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+                    <EditBox name="AnnouncefooterMsg" inherits="InputBoxTemplate" autoFocus="false">
+                        <Size x="320" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncefooterCheck" relativePoint="RIGHT" x="10"/>
+                        </Anchors>
+                        <FontString font="Fonts\ARIALN.TTF">
+                            <FontHeight val="12"/>
+                        </FontString>
+                    </EditBox>
+                    <CheckButton name="AnnouncerwCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="AnnouncerwText" relativePoint="BOTTOMLEFT" y="-5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBFlaresDB.announce_rw = not MBFlaresDB.announce_rw
+                            </OnClick>
+                        </Scripts>
+                    </CheckButton>
+                    <EditBox name="AnnouncerwMsg" inherits="InputBoxTemplate" autoFocus="false">
+                        <Size x="320" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="AnnouncerwCheck" relativePoint="RIGHT" x="10"/>
+                        </Anchors>
+                        <FontString font="Fonts\ARIALN.TTF">
+                            <FontHeight val="12"/>
+                        </FontString>
+                    </EditBox>
+                    <CheckButton name="AnnouncetooltipCheck" inherits="UICheckButtonTemplate">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="AnnouncerwCheck" relativePoint="BOTTOM" y="-15"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MBDB.announce_tooltip = not MBDB.announce_tooltip
+                            </OnClick>
+                        </Scripts>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString name="AnnouncetooltipText" inherits="ChatFontSmall" text="Add announce text to raid icon tooltips.">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativePoint="RIGHT" x="10"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </CheckButton>
+                    <Button name="AnnounceResetMsgButton" inherits="UIPanelButtonTemplate" text="Reset to Default Messages">
+                        <Size x="200" y="20"/>
+                        <Anchors>
+                            <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="-5" y="5"/>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                MB_reset_msg();
+                                MB_checkUpdater();
+                            </OnClick>
+                        </Scripts>
+                    </Button>
+                </Frames>
+            </Frame>
+        </Frames>
+    </Frame>
+</Ui>

@@ -1,0 +1,329 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+    <Script file="MBL_RaidTargeting.lua"/>
+
+    <Button name="MB_TestIconTemplate" virtual="true" enableMouse="true">
+        <Size x="20" y="20"/>
+        <Anchors>
+            <Anchor point="LEFT" relativeTo="iconCircle" relativePoint="RIGHT" />
+        </Anchors>
+        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+            <TexCoords left="0" right="0.25" top="0" bottom="0.25"/>
+        </NormalTexture>
+        <Scripts>
+            <OnClick>
+                SetRaidTargetIcon("target", 1)
+            </OnClick> 
+            <OnEnter>
+                if (MBDB.tooltips==true) then
+                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                    GameTooltip:ClearLines();
+                    if MBDB.announce_tooltip then
+                        GameTooltip:AddLine(MBDB.msg_star, 1,1,1,true);
+                    end
+                    GameTooltip:AddLine("Star", 0.88,0.65,0);
+                    GameTooltip:Show()
+                end
+            </OnEnter>
+            <OnLeave>
+                GameTooltip:Hide()
+            </OnLeave>
+        </Scripts>
+    </Button>
+
+    <Frame name="MBL_RaidTargeting" parent="UIParent" inherits="BackdropTemplate" enableMouse="true" movable="true" clampedToScreen="true">
+        <KeyValues>
+            <KeyValue key="backdropInfo" value="MB_BORDERLESS_BACKDROP" type="global"/>
+            <KeyValue key="backdropColor" value="MB_MAIN_FRAME_BACKDROP_COLOR" type="global"/>
+            <KeyValue key="backdropColorAlpha" value="0" type="number"/>
+        </KeyValues>
+        <Size x="190" y="35"/>
+        <Anchors>
+            <Anchor point="TOP" relativeTo="UIParent" relativePoint="TOP" />
+        </Anchors>
+        <Frames>
+            <Frame name="MBL_RaidTargeting_Mover" inherits="BackdropTemplate" enableMouse="true" movable="true">
+                <Anchors>
+                    <Anchor point="RIGHT" relativeTo="MBL_RaidTargeting" relativePoint="LEFT" />
+                </Anchors>
+                <KeyValues>
+                    <KeyValue key="backdropInfo" value="MB_DEFAULT_BACKDROP" type="global"/>
+                    <KeyValue key="backdropColor" value="MB_MOVER_LEFT_FRAME_BACKDROP_COLOR" type="global"/>
+                    <KeyValue key="backdropColorAlpha" value="0.7" type="number"/>
+                </KeyValues>
+                <Scripts>
+                    <OnMouseDown inherit="prepend">
+                        MBL_RaidTargeting_Mover_OnMouseDown(self, button);
+                    </OnMouseDown>
+                    <OnMouseUp inherit="prepend">
+                        MBL_RaidTargeting_Mover_OnMouseUp(self);
+                    </OnMouseUp>
+                </Scripts>
+                <Size x="20" y="35"/>
+            </Frame>
+            <Frame name="MBL_RaidTargeting_Icons" inherits="BackdropTemplate" enableMouse="true" movable="true">
+                <KeyValues>
+                    <KeyValue key="backdropInfo" value="MB_DEFAULT_BACKDROP" type="global"/>
+                    <KeyValue key="backdropColor" value="MB_MOVER_LEFT_FRAME_BACKDROP_COLOR" type="global"/>
+                    <KeyValue key="backdropColorAlpha" value="0.7" type="number"/>
+                </KeyValues>
+                <Size x="190" y="35"/>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="MBL_RaidTargeting" relativePoint="LEFT" />
+                </Anchors>
+                <Frames>
+                    <Button name="iconSkull" enableMouse="true">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="MBL_RaidTargeting" relativePoint="LEFT" x="5" />
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0.75" right="1" top="0.25" bottom="0.5"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnClick>
+                                SetRaidTargetIcon("target", 8)
+                            </OnClick>
+                            <OnEnter>
+                                if (MBDB.tooltips==true) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    if MBDB.announce_tooltip then
+                                        GameTooltip:AddLine(MBDB.msg_skull, 1,1,1,true);
+                                    end
+                                    GameTooltip:AddLine("Skull", 0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="iconCross" enableMouse="true">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="iconSkull" relativePoint="RIGHT" />
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0.5" right="0.75" top="0.25" bottom="0.5"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnClick>
+                                SetRaidTargetIcon("target", 7)
+                            </OnClick>
+                            <OnEnter>
+                                if (MBDB.tooltips==true) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    if MBDB.announce_tooltip then
+                                        GameTooltip:AddLine(MBDB.msg_cross, 1,1,1,true);
+                                    end
+                                    GameTooltip:AddLine("Cross", 0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="iconSquare" enableMouse="true">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="iconCross" relativePoint="RIGHT" />
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0.25" right="0.5" top="0.25" bottom="0.5"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnClick>
+                                SetRaidTargetIcon("target", 6)
+                            </OnClick>
+                            <OnEnter>
+                                if (MBDB.tooltips==true) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    if MBDB.announce_tooltip then
+                                        GameTooltip:AddLine(MBDB.msg_square, 1,1,1,true);
+                                    end
+                                    GameTooltip:AddLine("Square", 0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="iconMoon" enableMouse="true">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="iconSquare" relativePoint="RIGHT" />
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0" right="0.25" top="0.25" bottom="0.5"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnClick>
+                                SetRaidTargetIcon("target", 5)
+                            </OnClick>
+                            <OnEnter>
+                                if (MBDB.tooltips==true) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    if MBDB.announce_tooltip then
+                                        GameTooltip:AddLine(MBDB.msg_moon, 1,1,1,true);
+                                    end
+                                    GameTooltip:AddLine("Moon", 0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="iconTriangle" enableMouse="true">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="iconMoon" relativePoint="RIGHT" />
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0.75" right="1" top="0" bottom="0.25"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnClick>
+                                SetRaidTargetIcon("target", 4)
+                            </OnClick>
+                            <OnEnter>
+                                if (MBDB.tooltips==true) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    if MBDB.announce_tooltip then
+                                        GameTooltip:AddLine(MBDB.msg_triangle, 1,1,1,true);
+                                    end
+                                    GameTooltip:AddLine("Triangle", 0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="iconDiamond" enableMouse="true">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="iconTriangle" relativePoint="RIGHT" />
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0.5" right="0.75" top="0" bottom="0.25"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnClick>
+                                SetRaidTargetIcon("target", 3)
+                            </OnClick>
+                            <OnEnter>
+                                if (MBDB.tooltips==true) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    if MBDB.announce_tooltip then
+                                        GameTooltip:AddLine(MBDB.msg_diamond, 1,1,1,true);
+                                    end
+                                    GameTooltip:AddLine("Diamond", 0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="iconCircle" enableMouse="true">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="iconDiamond" relativePoint="RIGHT" />
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0.25" right="0.5" top="0" bottom="0.25"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnClick>
+                                print(self)
+                                SetRaidTargetIcon("target", 2)
+                            </OnClick>
+                            <OnEnter>
+                                if (MBDB.tooltips==true) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    if MBDB.announce_tooltip then
+                                        GameTooltip:AddLine(MBDB.msg_circle, 1,1,1,true);
+                                    end
+                                    GameTooltip:AddLine("Circle", 0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="iconStar" enableMouse="true">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="iconCircle" relativePoint="RIGHT" />
+                        </Anchors>
+                        <NormalTexture file="Interface\TargetingFrame\UI-RaidTargetingIcons">
+                            <TexCoords left="0" right="0.25" top="0" bottom="0.25"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnClick>
+                                SetRaidTargetIcon("target", 1)
+                            </OnClick>
+                            <OnEnter>
+                                if (MBDB.tooltips==true) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    if MBDB.announce_tooltip then
+                                        GameTooltip:AddLine(MBDB.msg_star, 1,1,1,true);
+                                    end
+                                    GameTooltip:AddLine("Star", 0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="lockIcon" enableMouse="true">
+                        <Size x="20" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="iconStar" relativePoint="RIGHT" />
+                        </Anchors>
+                        <NormalTexture file="Interface\AddOns\MarkingBarLives\resources\Glues-Addon-Icons">
+                            <TexCoords left="0.25" right="0.5" top="0" bottom="1"/>
+                        </NormalTexture>
+                        <Scripts>
+                            <OnClick>
+                                MB_lockToggle("main")
+                            </OnClick>
+                            <OnEnter>
+                                if (MBDB.tooltips==true) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+                                    GameTooltip:ClearLines();
+                                    GameTooltip:AddLine("Lock/Unlock Icons",0.88,0.65,0);
+                                    GameTooltip:Show()
+                                end
+                            </OnEnter>
+                            <OnLeave>
+                                GameTooltip:Hide()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                </Frames>
+            </Frame>
+        </Frames>
+    </Frame>
+</Ui>
